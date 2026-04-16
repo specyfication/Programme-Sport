@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Programme Prise de Masse — Maison</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #06090f;
+    --surface: #0d1420;
+    --surface2: #121b2e;
+    --border: #1a2540;
+    --text: #e2eaf8;
+    --muted: #4a5c7a;
+    --muted2: #2a3a55;
+    --accent: #f97316;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRAIN OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    padding: 72px 24px 56px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(249,115,22,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(249,115,22,0.1);
+    border: 1px solid rgba(249,115,22,0.25);
+    border-radius: 999px;
+    padding: 5px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #f97316;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #f97316;
+    animation: pulse 2s infinite;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 12vw, 96px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: #f8fafc;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero-title span {
+    display: block;
+    background: linear-gradient(90deg, #f97316, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    margin-top: 18px;
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 40px;
+    animation: fadeUp 0.6s 0.3s ease both;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: #f97316;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .stat-divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+    align-self: center;
+  }
+
+  /* ─── DAY NAV ─── */
+  .day-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(6, 9, 15, 0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+  }
+
+  .day-nav {
+    display: flex;
+    gap: 4px;
+    max-width: 820px;
+    margin: 0 auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 12px 0;
+  }
+
+  .day-nav::-webkit-scrollbar { display: none; }
+
+  .day-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--muted);
+    min-width: 72px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-family: 'Manrope', sans-serif;
+  }
+
+  .day-btn:hover { background: var(--surface); color: var(--text); }
+
+  .day-btn.active {
+    border-color: var(--day-color);
+    color: var(--day-color);
+    background: color-mix(in srgb, var(--day-color) 10%, transparent);
+  }
+
+  .day-btn-emoji { font-size: 20px; line-height: 1; }
+  .day-btn-label { font-size: 9px; font-weight: 800; letter-spacing: 0.1em; }
+  .day-btn-sub { font-size: 8px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.7; }
+
+  /* ─── MAIN ─── */
+  .main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 16px 80px;
+  }
+
+  /* ─── DAY SECTION ─── */
+  .day-section { display: none; }
+  .day-section.active { display: block; animation: fadeUp 0.35s ease both; }
+
+  /* ─── DAY HEADER ─── */
+  .day-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .day-tag {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--day-color);
+    margin-bottom: 8px;
+  }
+
+  .day-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 8vw, 56px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: #f8fafc;
+  }
+
+  /* ─── PROGRESS RING ─── */
+  .progress-ring-wrap { text-align: center; flex-shrink: 0; }
+  .progress-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); margin-top: 8px; text-transform: uppercase; }
+
+  /* ─── INFO BLOCK ─── */
+  .info-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+
+  .info-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+  .info-label { font-size: 9px; font-weight: 800; letter-spacing: 0.14em; color: var(--muted); text-transform: uppercase; margin-bottom: 5px; }
+  .info-text { font-size: 13px; color: #8ca3c8; line-height: 1.6; }
+
+  /* ─── EXO GRID ─── */
+  .exo-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .exo-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exo-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--day-color);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .exo-card:hover { border-color: var(--day-color); transform: translateY(-1px); }
+  .exo-card:hover::before { opacity: 1; }
+  .exo-card.done { opacity: 0.45; }
+  .exo-card.done::before { opacity: 1; }
+
+  .exo-check {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    border: 2px solid var(--day-color);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .exo-card.done .exo-check {
+    background: var(--day-color);
+    color: white;
+  }
+
+  .exo-name { font-size: 15px; font-weight: 700; color: #f1f5f9; margin-bottom: 4px; }
+  .exo-tip { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  .exo-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: 36px;
+  }
+
+  .stat-pill-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--day-color);
+  }
+
+  .stat-pill-rest { color: var(--muted); }
+  .stat-pill-label { font-size: 8px; font-weight: 800; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+  .stat-sep { width: 1px; height: 24px; background: var(--border); }
+
+  /* ─── NOTE ─── */
+  .note-box {
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #a5b4fc;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  /* ─── REST DAY ─── */
+  .rest-hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+
+  .rest-hero-icon { font-size: 64px; margin-bottom: 16px; display: block; }
+
+  .rest-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    color: #f8fafc;
+    letter-spacing: 0.03em;
+    margin-bottom: 12px;
+  }
+
+  .rest-hero-text { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 400px; margin: 0 auto; }
+
+  .rest-activities { display: flex; flex-direction: column; gap: 10px; }
+
+  .rest-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 14px;
+    color: #c8d5e8;
+    font-weight: 500;
+  }
+
+  .rest-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--muted2);
+    flex-shrink: 0;
+  }
+
+  /* ─── TIPS ─── */
+  .tips-section { margin-top: 56px; }
+
+  .section-eyebrow {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-eyebrow::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+  }
+
+  .tip-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    transition: border-color 0.2s;
+  }
+
+  .tip-card:hover { border-color: var(--muted2); }
+  .tip-icon { font-size: 22px; flex-shrink: 0; }
+  .tip-text { font-size: 13px; color: #8ca3c8; line-height: 1.6; }
+
+  /* ─── WEEKLY OVERVIEW ─── */
+  .overview-section { margin-top: 56px; }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .overview-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .overview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .overview-card:hover { transform: translateY(-2px); }
+  .overview-emoji { font-size: 20px; margin-bottom: 6px; display: block; }
+  .overview-day { font-size: 8px; font-weight: 800; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+  .overview-focus { font-size: 10px; font-weight: 600; line-height: 1.3; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 500px) {
+    .exo-stats { display: none; }
+    .exo-card { grid-template-columns: auto 1fr; }
+    .hero-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Débutant · Maison · Sans matériel</div>
+  <h1 class="hero-title">
+    Programme
+    <span>Prise de Masse</span>
+  </h1>
+  <p class="hero-sub">Tapis de sol uniquement &nbsp;·&nbsp; 6 séances / 7 jours</p>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Séances / semaine</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">35</div>
+      <div class="stat-label">Exercices au total</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-num">45</div>
+      <div class="stat-label">Min par séance</div>
+    </div>
+  </div>
+</section>
+
+<!-- DAY NAV -->
+<div class="day-nav-wrap">
+  <div class="day-nav" id="dayNav"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="main" id="mainContent"></main>
+
+<!-- TIPS + OVERVIEW -->
+<div style="max-width:820px;margin:0 auto;padding:0 16px">
+
+  <!-- WEEKLY OVERVIEW -->
+  <section class="overview-section">
+    <div class="section-eyebrow">Vue d'ensemble de la semaine</div>
+    <div class="overview-grid" id="overviewGrid"></div>
+  </section>
+
+  <!-- TIPS -->
+  <section class="tips-section">
+    <div class="section-eyebrow">Conseils essentiels</div>
+    <div class="tips-grid">
+      <div class="tip-card"><span class="tip-icon">💧</span><span class="tip-text">Bois <strong>2L d'eau</strong> par jour. L'hydratation améliore la force, la récupération et la concentration.</span></div>
+      <div class="tip-card"><span class="tip-icon">🥩</span><span class="tip-text">Vise <strong>1,6–2g de protéines par kg</strong> de poids de corps. Œufs, poulet, légumineuses, fromage blanc.</span></div>
+      <div class="tip-card"><span class="tip-icon">😴</span><span class="tip-text">Le muscle se reconstruit <strong>la nuit</strong>. Sans 7–9h de sommeil, la progression sera bloquée.</span></div>
+      <div class="tip-card"><span class="tip-icon">📈</span><span class="tip-text"><strong>Progressive overload :</strong> augmente de 1–2 reps chaque semaine pour forcer ton corps à s'adapter.</span></div>
+      <div class="tip-card"><span class="tip-icon">⚠️</span><span class="tip-text">Courbature ≠ douleur. Arrête immédiatement si tu ressens une <strong>douleur articulaire aiguë</strong>.</span></div>
+      <div class="tip-card"><span class="tip-icon">🍽️</span><span class="tip-text">Mange dans les <strong>30–60 min après la séance</strong> pour optimiser la récupération et la synthèse musculaire.</span></div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Programme généré avec soin &nbsp;·&nbsp; Consulte un professionnel de santé avant de commencer
+</footer>
+
+<script>
+const DAYS = [
+  {
+    id: 0, label: 'LUN', fullLabel: 'LUNDI', emoji: '💪',
+    focus: 'Haut du corps — Push', tag: 'Poitrine · Épaules · Triceps', color: '#f97316',
+    warmup: '5 min : Rotations d\'épaules, bras croisés, jumping jacks légers',
+    cooldown: 'Étirement pectoraux, ouverture de poitrine, triceps tendu au-dessus de la tête',
+    exercises: [
+      { name: 'Pompes classiques', sets: '3', reps: '8–12', rest: '60s', tip: 'Corps bien droit, coudes à 45° du torse' },
+      { name: 'Pompes surélevées', sets: '3', reps: '6–10', rest: '60s', tip: 'Pieds sur le canapé, cible le haut du pectoral' },
+      { name: 'Pompes diamant', sets: '3', reps: '6–10', rest: '60s', tip: 'Mains rapprochées formant un losange, coudes collés' },
+      { name: 'Pike push-ups', sets: '3', reps: '8–10', rest: '60s', tip: 'Hanches hautes en V, tête vers le sol — épaules max' },
+      { name: 'Dips sur chaise', sets: '3', reps: '8–12', rest: '60s', tip: 'Mains sur le bord, coudes pointés vers l\'arrière' },
+    ]
+  },
+  {
+    id: 1, label: 'MAR', fullLabel: 'MARDI', emoji: '🦵',
+    focus: 'Bas du corps — Jambes', tag: 'Quadriceps · Fessiers · Ischio', color: '#22c55e',
+    warmup: '5 min : Leg swings, cercles de hanches, squats légers sans charge',
+    cooldown: 'Étirement quadriceps debout, ischio-jambiers au sol, fessiers en croix',
+    exercises: [
+      { name: 'Squats au poids du corps', sets: '4', reps: '15–20', rest: '60s', tip: 'Genoux dans l\'axe des orteils, dos droit' },
+      { name: 'Fentes alternées', sets: '3', reps: '10/jambe', rest: '60s', tip: 'Genou arrière à 2 cm du sol, torse droit' },
+      { name: 'Hip thrusts au sol', sets: '4', reps: '15–20', rest: '60s', tip: 'Squeeze le fessier fort en haut, maintiens 1 seconde' },
+      { name: 'Squats sautés', sets: '3', reps: '10–12', rest: '60s', tip: 'Atterrissage souple et silencieux, genoux fléchis' },
+      { name: 'Wall sit', sets: '3', reps: '30–45s', rest: '60s', tip: 'Dos plat contre le mur, cuisses parallèles au sol' },
+      { name: 'Élévations de mollets', sets: '3', reps: '20–25', rest: '45s', tip: 'Montée lente, maintiens 1s en haut' },
+    ]
+  },
+  {
+    id: 2, label: 'MER', fullLabel: 'MERCREDI', emoji: '🔥',
+    focus: 'Core & Cardio', tag: 'Abdominaux · Gainage · Brûle-graisses', color: '#3b82f6',
+    warmup: '5 min : Jumping jacks, rotations de tronc, marche avec genoux hauts',
+    cooldown: 'Cat-cow, étirement cobra, torsion thoracique au sol — 8 min minimum',
+    exercises: [
+      { name: 'Planche frontale', sets: '3', reps: '30–45s', rest: '45s', tip: 'Bassin ni trop haut ni trop bas, respire calmement' },
+      { name: 'Crunchs', sets: '3', reps: '15–20', rest: '45s', tip: 'Mains derrière les oreilles, menton décollé de la poitrine' },
+      { name: 'Relevés de jambes tendues', sets: '3', reps: '12–15', rest: '45s', tip: 'Dos plaqué au sol tout au long du mouvement' },
+      { name: 'Mountain climbers', sets: '3', reps: '20 (10/jambe)', rest: '45s', tip: 'Rythme rapide, hanches basses, dos plat' },
+      { name: 'Russian twists', sets: '3', reps: '20 (10/côté)', rest: '45s', tip: 'Pieds décollés pour augmenter la difficulté' },
+      { name: 'Burpees', sets: '3', reps: '8–10', rest: '60s', tip: 'Pompe complète au sol, saut explosif avec bras levés' },
+    ]
+  },
+  {
+    id: 3, label: 'JEU', fullLabel: 'JEUDI', emoji: '🏋️',
+    focus: 'Haut du corps — Pull', tag: 'Dos · Biceps · Posture', color: '#a855f7',
+    warmup: '5 min : Rotations d\'épaules, bras en croix, cercles de cou doux',
+    cooldown: 'Étirement en croix pour le dos, posture de l\'enfant, biceps au mur',
+    note: '* Rows à la porte : ouvre une porte, place les pieds contre la base des deux côtés, agrippe les poignées et tire ta poitrine vers elles.',
+    exercises: [
+      { name: 'Superman', sets: '4', reps: '12–15', rest: '45s', tip: 'Lève bras ET jambes ensemble, maintiens 2s en haut' },
+      { name: 'Snow angels inversés', sets: '3', reps: '12–15', rest: '45s', tip: 'Ventre au sol, bras le long du corps, mouvement lent et contrôlé' },
+      { name: 'Pompes en Y', sets: '3', reps: '10–12', rest: '60s', tip: 'Bras positionnés en Y, active les rhomboïdes et trapèzes' },
+      { name: 'Rows à la porte*', sets: '3', reps: '10–12', rest: '60s', tip: 'Tire les coudes derrière toi, squeeze les omoplates' },
+      { name: 'Curls isométriques (table)', sets: '3', reps: '12–15', rest: '45s', tip: 'Pousse vers le haut sous une surface fixe, contracte les biceps fort' },
+      { name: 'Planche latérale', sets: '3', reps: '25–30s/côté', rest: '45s', tip: 'Hanche bien décollée, corps formant une ligne droite' },
+    ]
+  },
+  {
+    id: 4, label: 'VEN', fullLabel: 'VENDREDI', emoji: '🍑',
+    focus: 'Bas du corps — Fessiers', tag: 'Fessiers · Cuisses · Stabilité', color: '#ec4899',
+    warmup: '5 min : Marche genoux hauts, cercles de hanches, squats lents',
+    cooldown: 'Pigeon au sol, figure 4 couché, étirement ischio debout — 10 min',
+    exercises: [
+      { name: 'Squats bulgares (chaise)', sets: '3', reps: '10/jambe', rest: '60s', tip: 'Pied arrière posé sur la chaise, descente lente en 3s' },
+      { name: 'Glute bridges', sets: '4', reps: '20', rest: '45s', tip: 'Orteils légèrement relevés, squeeze fort 2s en haut' },
+      { name: 'Kickbacks à quatre pattes', sets: '3', reps: '15/jambe', rest: '45s', tip: 'Genou à 90°, pousse le talon vers le plafond, dos plat' },
+      { name: 'Sumo squats', sets: '3', reps: '15–20', rest: '60s', tip: 'Pieds larges, orteils en canard, descente lente et profonde' },
+      { name: 'Fentes latérales', sets: '3', reps: '10/jambe', rest: '60s', tip: 'Pied d\'appui fléchi, l\'autre jambe tendue au sol' },
+      { name: 'Pont fessier unilatéral', sets: '3', reps: '12/jambe', rest: '45s', tip: 'Une jambe tendue vers le plafond, pousse depuis le talon opposé' },
+    ]
+  },
+  {
+    id: 5, label: 'SAM', fullLabel: 'SAMEDI', emoji: '⚡',
+    focus: 'Full Body — Circuit', tag: 'Tout le corps · Explosivité', color: '#f59e0b',
+    warmup: '5 min : Marche active, bras en moulin, jumping jacks progressifs',
+    cooldown: 'Étirement complet corps entier — minimum 10 min, prends ton temps',
+    note: '★ Effectue 3 tours complets du circuit. Repos de 2 min entre chaque tour. 45s d\'effort / 15s de transition.',
+    exercises: [
+      { name: 'Jumping jacks', sets: 'Circuit', reps: '45s', rest: '15s', tip: 'Démarre le circuit progressivement pour t\'échauffer' },
+      { name: 'Pompes', sets: 'Circuit', reps: '45s', rest: '15s', tip: 'Adapte l\'intensité — pompes normales ou sur genoux' },
+      { name: 'Squats sautés', sets: 'Circuit', reps: '45s', rest: '15s', tip: 'Atterrissage silencieux = technique parfaite' },
+      { name: 'Mountain climbers', sets: 'Circuit', reps: '45s', rest: '15s', tip: 'Rythme soutenu, synchronise avec ta respiration' },
+      { name: 'Hip thrusts explosifs', sets: 'Circuit', reps: '45s', rest: '15s', tip: 'Propulse les hanches vers le haut avec puissance' },
+      { name: 'Burpees', sets: 'Circuit', reps: '45s', rest: '15s', tip: 'Dernière ligne droite — tout donner jusqu\'au bout !' },
+    ]
+  },
+  {
+    id: 6, label: 'DIM', fullLabel: 'DIMANCHE', emoji: '🧘',
+    focus: 'Repos actif', tag: 'Récupération · Mobilité', color: '#64748b',
+    rest: true,
+    restActivities: [
+      { icon: '🚶', text: '20–30 min de marche tranquille en extérieur' },
+      { icon: '🤸', text: 'Séance de stretching complet du corps (15 min)' },
+      { icon: '🧘', text: 'Yoga débutant (cherche une vidéo sur YouTube)' },
+      { icon: '🛁', text: 'Bain chaud ou douche froide pour la récupération' },
+      { icon: '📖', text: 'Prépare mentalement ta semaine suivante d\'entraînement' },
+    ]
+  },
+];
+
+let activeDay = 0;
+const checked = {};
+
+function setDay(idx) {
+  activeDay = idx;
+  renderNav();
+  renderMain();
+}
+
+function toggleExo(dayIdx, exoIdx) {
+  const key = `${dayIdx}-${exoIdx}`;
+  checked[key] = !checked[key];
+  renderMain();
+  renderNav();
+}
+
+function getProgress(dayIdx) {
+  const day = DAYS[dayIdx];
+  if (!day.exercises) return 0;
+  const done = day.exercises.filter((_, i) => checked[`${dayIdx}-${i}`]).length;
+  return Math.round((done / day.exercises.length) * 100);
+}
+
+function renderNav() {
+  const nav = document.getElementById('dayNav');
+  nav.innerHTML = DAYS.map((d, i) => {
+    const prog = getProgress(i);
+    const isActive = i === activeDay;
+    return `
+      <button class="day-btn ${isActive ? 'active' : ''}"
+        style="--day-color:${d.color}"
+        onclick="setDay(${i})">
+        <span class="day-btn-emoji">${d.emoji}</span>
+        <span class="day-btn-label">${d.label}</span>
+        ${!d.rest && prog > 0 ? `<span class="day-btn-sub" style="color:${d.color}">${prog}%</span>` : ''}
+      </button>`;
+  }).join('');
+}
+
+function renderMain() {
+  const main = document.getElementById('mainContent');
+  const d = DAYS[activeDay];
+
+  if (d.rest) {
+    main.innerHTML = `
+      <div style="--day-color:${d.color}">
+        <div class="day-header">
+          <div>
+            <div class="day-tag">${d.tag}</div>
+            <div class="day-title">${d.emoji} ${d.focus}</div>
+          </div>
+        </div>
+        <div class="rest-hero">
+          <span class="rest-hero-icon">🌙</span>
+          <div class="rest-hero-title">REPOS & RÉCUPÉRATION</div>
+          <p class="rest-hero-text">Aujourd'hui ton corps travaille <strong>en silence</strong>. Les fibres musculaires se reconstruisent plus épaisses. Ce jour est aussi important que les séances d'entraînement.</p>
+        </div>
+        <div class="rest-activities">
+          ${d.restActivities.map(a => `
+            <div class="rest-item">
+              <span style="font-size:20px">${a.icon}</span>
+              ${a.text}
+            </div>`).join('')}
+        </div>
+      </div>`;
+    return;
+  }
+
+  const prog = getProgress(activeDay);
+  const circumference = 2 * Math.PI * 30;
+  const offset = circumference * (1 - prog / 100);
+
+  main.innerHTML = `
+    <div style="--day-color:${d.color}">
+      <div class="day-header">
+        <div>
+          <div class="day-tag">${d.tag}</div>
+          <div class="day-title">${d.emoji} ${d.focus}</div>
+        </div>
+        <div class="progress-ring-wrap">
+          <svg width="72" height="72" viewBox="0 0 72 72">
+            <circle cx="36" cy="36" r="30" fill="none" stroke="#1a2540" stroke-width="6"/>
+            <circle cx="36" cy="36" r="30" fill="none"
+              stroke="${d.color}" stroke-width="6"
+              stroke-dasharray="${circumference}"
+              stroke-dashoffset="${offset}"
+              stroke-linecap="round"
+              style="transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 0.5s ease"/>
+            <text x="36" y="41" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Manrope,sans-serif">${prog}%</text>
+          </svg>
+          <div class="progress-label">Progression</div>
+        </div>
+      </div>
+
+      <div class="info-block">
+        <span class="info-icon">🔥</span>
+        <div>
+          <div class="info-label">Échauffement</div>
+          <div class="info-text">${d.warmup}</div>
+        </div>
+      </div>
+
+      <div class="exo-grid">
+        ${d.exercises.map((ex, i) => {
+          const done = !!checked[`${activeDay}-${i}`];
+          return `
+            <div class="exo-card ${done ? 'done' : ''}" onclick="toggleExo(${activeDay}, ${i})">
+              <div class="exo-check">${done ? '✓' : ''}</div>
+              <div>
+                <div class="exo-name">${ex.name}</div>
+                <div class="exo-tip">${ex.tip}</div>
+              </div>
+              <div class="exo-stats">
+                <div class="stat-pill">
+                  <div class="stat-pill-val">${ex.sets}</div>
+                  <div class="stat-pill-label">séries</div>
+                </div>
+                <div class="stat-sep"></div>
+                <div class="stat-pill">
+                  <div class="stat-pill-val" style="font-size:14px">${ex.reps}</div>
+                  <div class="stat-pill-label">reps</div>
+                </div>
+                <div class="stat-sep"></div>
+                <div class="stat-pill">
+                  <div class="stat-pill-val stat-pill-rest" style="color:var(--muted)">${ex.rest}</div>
+                  <div class="stat-pill-label">repos</div>
+                </div>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>
+
+      ${d.note ? `<div class="note-box">💡 ${d.note}</div>` : ''}
+
+      <div class="info-block">
+        <span class="info-icon">🧊</span>
+        <div>
+          <div class="info-label">Retour au calme</div>
+          <div class="info-text">${d.cooldown}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderOverview() {
+  const grid = document.getElementById('overviewGrid');
+  grid.innerHTML = DAYS.map((d, i) => `
+    <div class="overview-card" onclick="setDay(${i}); window.scrollTo({top:0,behavior:'smooth'})"
+      style="border-color: color-mix(in srgb, ${d.color} 30%, transparent)">
+      <span class="overview-emoji">${d.emoji}</span>
+      <div class="overview-day">${d.label}</div>
+      <div class="overview-focus" style="color:${d.color}">${d.rest ? 'Repos' : d.focus.split('—')[0].trim()}</div>
+    </div>`).join('');
+}
+
+// Init
+renderNav();
+renderMain();
+renderOverview();
+</script>
+</body>
+</html>
