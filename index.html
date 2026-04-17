@@ -613,6 +613,182 @@
 
   .day-btn.complete { opacity: 0.8; }
 
+  /* ─── NUTRITION ─── */
+  .nutrition-section { margin-top: 56px; }
+
+  .nutrition-intro {
+    background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(249,115,22,0.07));
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 16px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: #8ca3c8;
+    line-height: 1.7;
+  }
+
+  .nutrition-intro strong { color: #e2eaf8; }
+
+  .macro-bar-wrap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .macro-bar-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+
+  .macro-bar-card:hover { border-color: var(--muted2); }
+
+  .macro-icon { font-size: 28px; margin-bottom: 8px; }
+
+  .macro-name {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .macro-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .macro-desc {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .nutrition-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: border-color 0.2s;
+  }
+
+  .nutrition-card:hover { border-color: var(--muted2); }
+
+  .nutrition-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .nutrition-card-icon { font-size: 22px; flex-shrink: 0; }
+
+  .nutrition-card-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: #f1f5f9;
+    letter-spacing: 0.02em;
+  }
+
+  .nutrition-card-body {
+    font-size: 12px;
+    color: #8ca3c8;
+    line-height: 1.7;
+  }
+
+  .nutrition-card-body strong { color: #c8d5e8; }
+
+  .nutrition-card-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .nutrition-card-body li::before {
+    content: '→ ';
+    color: #f97316;
+    font-weight: 700;
+  }
+
+  .meal-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .meal-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: var(--border);
+  }
+
+  .meal-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    position: relative;
+  }
+
+  .meal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f97316;
+    flex-shrink: 0;
+    margin-top: 5px;
+    position: relative;
+    z-index: 1;
+    margin-left: 16px;
+    box-shadow: 0 0 0 3px rgba(249,115,22,0.15);
+  }
+
+  .meal-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 15px;
+    color: #f97316;
+    min-width: 80px;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .meal-content { flex: 1; }
+
+  .meal-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #f1f5f9;
+    margin-bottom: 3px;
+  }
+
+  .meal-detail {
+    font-size: 12px;
+    color: #8ca3c8;
+    line-height: 1.5;
+  }
 
   @media (max-width: 500px) {
     .exo-stats { display: none; }
@@ -677,6 +853,165 @@
       <div class="tip-card"><span class="tip-icon">⚠️</span><span class="tip-text">Courbature ≠ douleur. Arrête immédiatement si tu ressens une <strong>douleur articulaire aiguë</strong>.</span></div>
       <div class="tip-card"><span class="tip-icon">🍽️</span><span class="tip-text">Mange dans les <strong>30–60 min après la séance</strong> pour optimiser la récupération et la synthèse musculaire.</span></div>
     </div>
+  </section>
+
+  <!-- NUTRITION -->
+  <section class="nutrition-section">
+    <div class="section-eyebrow">Nutrition & Prise de masse</div>
+
+    <div class="nutrition-intro">
+      Pour prendre de la masse, ton corps a besoin d'un <strong>surplus calorique modéré</strong> (200–300 kcal/jour au-dessus de ta maintenance). Sans carburant suffisant, même le meilleur programme ne donnera pas de résultats. La nutrition, c'est <strong>50% de ton succès</strong>.
+    </div>
+
+    <!-- MACROS -->
+    <div class="macro-bar-wrap">
+      <div class="macro-bar-card">
+        <div class="macro-icon">🥩</div>
+        <div class="macro-name">Protéines</div>
+        <div class="macro-val" style="color:#f97316">1,6–2 g</div>
+        <div class="macro-desc">par kg de poids<br>Construisent le muscle</div>
+      </div>
+      <div class="macro-bar-card">
+        <div class="macro-icon">🌾</div>
+        <div class="macro-name">Glucides</div>
+        <div class="macro-val" style="color:#3b82f6">4–6 g</div>
+        <div class="macro-desc">par kg de poids<br>Carburant des séances</div>
+      </div>
+      <div class="macro-bar-card">
+        <div class="macro-icon">🥑</div>
+        <div class="macro-name">Lipides</div>
+        <div class="macro-val" style="color:#a855f7">0,8–1 g</div>
+        <div class="macro-desc">par kg de poids<br>Hormones & récupération</div>
+      </div>
+    </div>
+
+    <!-- NUTRITION CARDS -->
+    <div class="nutrition-grid">
+
+      <div class="nutrition-card">
+        <div class="nutrition-card-header">
+          <span class="nutrition-card-icon">🍗</span>
+          <div class="nutrition-card-title">Meilleures sources de protéines</div>
+        </div>
+        <div class="nutrition-card-body">
+          Privilégie des sources <strong>complètes et accessibles</strong> :
+          <ul>
+            <li>Œufs entiers (6g / œuf)</li>
+            <li>Poulet / dinde (31g / 100g)</li>
+            <li>Fromage blanc 0% (10g / 100g)</li>
+            <li>Lentilles & pois chiches (8–9g / 100g)</li>
+            <li>Thon en boîte (25g / 100g)</li>
+            <li>Skyr ou yaourt grec (10g / 100g)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nutrition-card">
+        <div class="nutrition-card-header">
+          <span class="nutrition-card-icon">⚡</span>
+          <div class="nutrition-card-title">Glucides pour performer</div>
+        </div>
+        <div class="nutrition-card-body">
+          Les glucides alimentent tes séances. Choisis des sources à <strong>index glycémique modéré</strong> :
+          <ul>
+            <li>Flocons d'avoine (petit-déjeuner idéal)</li>
+            <li>Riz complet, pâtes, patate douce</li>
+            <li>Pain complet ou de seigle</li>
+            <li>Banane avant l'entraînement</li>
+            <li>Fruits secs (dattes, raisins) en collation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nutrition-card">
+        <div class="nutrition-card-header">
+          <span class="nutrition-card-icon">🥑</span>
+          <div class="nutrition-card-title">Bonnes graisses à ne pas négliger</div>
+        </div>
+        <div class="nutrition-card-body">
+          Les lipides soutiennent la production hormonale (testostérone). Ne les évite pas :
+          <ul>
+            <li>Avocat (acides gras mono-insaturés)</li>
+            <li>Huile d'olive extra vierge</li>
+            <li>Noix, amandes, noix de cajou</li>
+            <li>Sardines & maquereaux (oméga-3)</li>
+            <li>Graines de lin ou de chia</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="nutrition-card">
+        <div class="nutrition-card-header">
+          <span class="nutrition-card-icon">🚫</span>
+          <div class="nutrition-card-title">Aliments à limiter</div>
+        </div>
+        <div class="nutrition-card-body">
+          Ces aliments freinent ta progression :
+          <ul>
+            <li>Alcool (détruit la synthèse protéique)</li>
+            <li>Ultra-transformés (biscuits, chips, fast-food)</li>
+            <li>Sodas et jus sucrés industriels</li>
+            <li>Charcuteries riches en sodium</li>
+            <li>Fritures répétées (inflammation)</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MEAL TIMING TIMELINE -->
+    <div class="section-eyebrow" style="margin-top:32px">Timing des repas — Journée type</div>
+    <div class="meal-timeline">
+      <div class="meal-item">
+        <div class="meal-dot"></div>
+        <div class="meal-time">7:00</div>
+        <div class="meal-content">
+          <div class="meal-title">🌅 Petit-déjeuner — Énergie durable</div>
+          <div class="meal-detail">Flocons d'avoine + lait / eau · 2 œufs brouillés · Fromage blanc + fruits rouges · Café noir sans sucre</div>
+        </div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-dot"></div>
+        <div class="meal-time">10:00</div>
+        <div class="meal-content">
+          <div class="meal-title">🍌 Collation pré-séance (si entraînement le matin)</div>
+          <div class="meal-detail">Banane + une poignée d'amandes · Ou un yaourt grec avec du miel</div>
+        </div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-dot"></div>
+        <div class="meal-time">12:30</div>
+        <div class="meal-content">
+          <div class="meal-title">🍽️ Déjeuner — Repas principal</div>
+          <div class="meal-detail">150–200g de protéines (poulet, thon, œufs) · Riz complet ou patate douce · Légumes verts à volonté · Filet d'huile d'olive</div>
+        </div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-dot"></div>
+        <div class="meal-time">16:30</div>
+        <div class="meal-content">
+          <div class="meal-title">⚡ Collation pré-entraînement</div>
+          <div class="meal-detail">30–45 min avant la séance · Tranches de pain complet + beurre de cacahuète · Ou fromage blanc + flocons d'avoine</div>
+        </div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-dot" style="background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,0.15)"></div>
+        <div class="meal-time" style="color:#22c55e">18:30</div>
+        <div class="meal-content">
+          <div class="meal-title">🏋️ Fenêtre anabolique — Post-séance</div>
+          <div class="meal-detail"><strong>Dans les 30–60 min :</strong> Shaker de protéines + banane · Ou fromage blanc + confiture · C'est le moment le plus important pour la récupération musculaire.</div>
+        </div>
+      </div>
+      <div class="meal-item">
+        <div class="meal-dot"></div>
+        <div class="meal-time">20:00</div>
+        <div class="meal-content">
+          <div class="meal-title">🌙 Dîner — Récupération nocturne</div>
+          <div class="meal-detail">Protéines à digestion lente (fromage, œufs, légumineuses) · Légumes vapeur · Évite les glucides lourds le soir si tu vises la sèche simultanée</div>
+        </div>
+      </div>
+    </div>
+
   </section>
 
 </div>
