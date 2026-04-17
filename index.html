@@ -486,7 +486,134 @@
     50% { opacity: 0.4; }
   }
 
-  /* ─── RESPONSIVE ─── */
+  /* ─── WEEK PROGRESS BAR IN NAV ─── */
+  .nav-week-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 8px;
+    flex-shrink: 0;
+    min-width: 90px;
+  }
+  .nav-week-label {
+    font-size: 8px; font-weight: 800; letter-spacing: 0.12em;
+    color: var(--muted); text-align: center;
+  }
+  .nav-week-bar {
+    height: 4px; background: var(--border); border-radius: 99px; overflow: hidden;
+  }
+  .nav-week-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f97316, #fbbf24);
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+  .nav-week-pct {
+    font-size: 9px; font-weight: 700; color: #f97316; text-align: center;
+  }
+
+  /* ─── RESET BUTTON ─── */
+  .reset-btn {
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    width: 44px; height: 44px;
+    background: rgba(239,68,68,0.08);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    color: #f87171;
+    font-size: 20px;
+    font-family: 'Manrope', sans-serif;
+    transition: all 0.2s;
+    margin-left: 4px;
+    align-self: center;
+  }
+  .reset-btn:hover {
+    background: rgba(239,68,68,0.15);
+    border-color: rgba(239,68,68,0.4);
+    transform: rotate(-20deg);
+  }
+
+  /* ─── DONE BANNER ─── */
+  .done-banner {
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.3);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #4ade80;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .modal-overlay.visible { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: #0d1420;
+    border: 1px solid #1a2540;
+    border-radius: 20px;
+    padding: 36px 32px;
+    max-width: 380px; width: 100%;
+    text-align: center;
+    transform: scale(0.92);
+    transition: transform 0.25s;
+  }
+  .modal-overlay.visible .modal-box { transform: scale(1); }
+  .modal-icon {
+    font-size: 40px; color: #f87171; margin-bottom: 16px;
+    font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.05em;
+  }
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: #f8fafc; letter-spacing: 0.03em; margin-bottom: 12px;
+  }
+  .modal-text { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 28px; }
+  .modal-actions { display: flex; gap: 12px; }
+  .modal-btn {
+    flex: 1; padding: 13px;
+    border-radius: 12px; border: none; cursor: pointer;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px; font-weight: 700;
+    transition: all 0.2s;
+  }
+  .modal-btn-cancel {
+    background: var(--surface2); color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .modal-btn-cancel:hover { background: var(--border); color: var(--text); }
+  .modal-btn-confirm {
+    background: #ef4444; color: white;
+  }
+  .modal-btn-confirm:hover { background: #dc2626; }
+
+  /* ─── TOAST ─── */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: #0d1420; border: 1px solid #22c55e;
+    color: #4ade80; font-size: 13px; font-weight: 700;
+    padding: 12px 24px; border-radius: 999px;
+    opacity: 0; pointer-events: none;
+    transition: all 0.35s ease;
+    z-index: 2000; white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .day-btn.complete { opacity: 0.8; }
+
+
   @media (max-width: 500px) {
     .exo-stats { display: none; }
     .exo-card { grid-template-columns: auto 1fr; }
@@ -557,6 +684,22 @@
 <footer>
   Programme généré avec soin &nbsp;·&nbsp; Consulte un professionnel de santé avant de commencer
 </footer>
+
+<!-- RESET MODAL -->
+<div id="resetModal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <div class="modal-icon">↺</div>
+    <div class="modal-title">Nouvelle semaine ?</div>
+    <p class="modal-text">Toute la progression cochée sera effacée. Cette action est irréversible.</p>
+    <div class="modal-actions">
+      <button class="modal-btn modal-btn-cancel" onclick="closeModal()">Annuler</button>
+      <button class="modal-btn modal-btn-confirm" onclick="confirmReset()">Réinitialiser</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" class="toast"></div>
 
 <script>
 const DAYS = [
@@ -659,8 +802,28 @@ const DAYS = [
   },
 ];
 
+// ─── COOKIES ───
+function saveCookie() {
+  const data = JSON.stringify(checked);
+  const expires = new Date();
+  expires.setFullYear(expires.getFullYear() + 1);
+  document.cookie = `gym_progress=${encodeURIComponent(data)};expires=${expires.toUTCString()};path=/;SameSite=Lax`;
+}
+
+function loadCookie() {
+  const match = document.cookie.match(/(?:^|;\s*)gym_progress=([^;]*)/);
+  if (!match) return {};
+  try { return JSON.parse(decodeURIComponent(match[1])); }
+  catch { return {}; }
+}
+
+function clearCookie() {
+  document.cookie = 'gym_progress=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;SameSite=Lax';
+}
+
+// ─── STATE ───
 let activeDay = 0;
-const checked = {};
+const checked = loadCookie();
 
 function setDay(idx) {
   activeDay = idx;
@@ -671,8 +834,18 @@ function setDay(idx) {
 function toggleExo(dayIdx, exoIdx) {
   const key = `${dayIdx}-${exoIdx}`;
   checked[key] = !checked[key];
+  if (!checked[key]) delete checked[key];
+  saveCookie();
   renderMain();
   renderNav();
+}
+
+function getTotalDone() {
+  return Object.values(checked).filter(Boolean).length;
+}
+
+function getTotalExos() {
+  return DAYS.reduce((acc, d) => acc + (d.exercises ? d.exercises.length : 0), 0);
 }
 
 function getProgress(dayIdx) {
@@ -682,22 +855,62 @@ function getProgress(dayIdx) {
   return Math.round((done / day.exercises.length) * 100);
 }
 
+function resetProgress() {
+  const modal = document.getElementById('resetModal');
+  modal.classList.add('visible');
+}
+
+function confirmReset() {
+  Object.keys(checked).forEach(k => delete checked[k]);
+  clearCookie();
+  closeModal();
+  renderNav();
+  renderMain();
+  showToast('✅ Progression réinitialisée — Bonne nouvelle semaine !');
+}
+
+function closeModal() {
+  document.getElementById('resetModal').classList.remove('visible');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ─── RENDER NAV ───
 function renderNav() {
   const nav = document.getElementById('dayNav');
+  const totalDone = getTotalDone();
+  const totalExos = getTotalExos();
+  const weekPct = Math.round((totalDone / totalExos) * 100);
+
   nav.innerHTML = DAYS.map((d, i) => {
     const prog = getProgress(i);
     const isActive = i === activeDay;
+    const complete = !d.rest && prog === 100;
     return `
-      <button class="day-btn ${isActive ? 'active' : ''}"
+      <button class="day-btn ${isActive ? 'active' : ''} ${complete ? 'complete' : ''}"
         style="--day-color:${d.color}"
         onclick="setDay(${i})">
-        <span class="day-btn-emoji">${d.emoji}</span>
+        <span class="day-btn-emoji">${complete ? '✅' : d.emoji}</span>
         <span class="day-btn-label">${d.label}</span>
-        ${!d.rest && prog > 0 ? `<span class="day-btn-sub" style="color:${d.color}">${prog}%</span>` : ''}
+        ${!d.rest && prog > 0 ? `<span class="day-btn-sub" style="color:${complete ? '#22c55e' : d.color}">${prog}%</span>` : '<span class="day-btn-sub">&nbsp;</span>'}
       </button>`;
-  }).join('');
+  }).join('') + `
+    <div class="nav-week-wrap">
+      <div class="nav-week-label">SEMAINE</div>
+      <div class="nav-week-bar"><div class="nav-week-fill" style="width:${weekPct}%"></div></div>
+      <div class="nav-week-pct">${weekPct}%</div>
+    </div>
+    <button class="reset-btn" onclick="resetProgress()" title="Réinitialiser la semaine">
+      <span>↺</span>
+    </button>`;
 }
 
+// ─── RENDER MAIN ───
 function renderMain() {
   const main = document.getElementById('mainContent');
   const d = DAYS[activeDay];
@@ -730,6 +943,7 @@ function renderMain() {
   const prog = getProgress(activeDay);
   const circumference = 2 * Math.PI * 30;
   const offset = circumference * (1 - prog / 100);
+  const ringColor = prog === 100 ? '#22c55e' : d.color;
 
   main.innerHTML = `
     <div style="--day-color:${d.color}">
@@ -742,16 +956,18 @@ function renderMain() {
           <svg width="72" height="72" viewBox="0 0 72 72">
             <circle cx="36" cy="36" r="30" fill="none" stroke="#1a2540" stroke-width="6"/>
             <circle cx="36" cy="36" r="30" fill="none"
-              stroke="${d.color}" stroke-width="6"
+              stroke="${ringColor}" stroke-width="6"
               stroke-dasharray="${circumference}"
               stroke-dashoffset="${offset}"
               stroke-linecap="round"
               style="transform:rotate(-90deg);transform-origin:50% 50%;transition:stroke-dashoffset 0.5s ease"/>
-            <text x="36" y="41" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Manrope,sans-serif">${prog}%</text>
+            <text x="36" y="41" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Manrope,sans-serif">${prog === 100 ? '✓' : prog + '%'}</text>
           </svg>
-          <div class="progress-label">Progression</div>
+          <div class="progress-label">${prog === 100 ? 'Terminé !' : 'Progression'}</div>
         </div>
       </div>
+
+      ${prog === 100 ? `<div class="done-banner">🎉 Séance complète — excellent travail !</div>` : ''}
 
       <div class="info-block">
         <span class="info-icon">🔥</span>
@@ -808,7 +1024,7 @@ function renderOverview() {
   grid.innerHTML = DAYS.map((d, i) => `
     <div class="overview-card" onclick="setDay(${i}); window.scrollTo({top:0,behavior:'smooth'})"
       style="border-color: color-mix(in srgb, ${d.color} 30%, transparent)">
-      <span class="overview-emoji">${d.emoji}</span>
+      <span class="overview-emoji">${!d.rest && getProgress(i) === 100 ? '✅' : d.emoji}</span>
       <div class="overview-day">${d.label}</div>
       <div class="overview-focus" style="color:${d.color}">${d.rest ? 'Repos' : d.focus.split('—')[0].trim()}</div>
     </div>`).join('');
