@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Programme Prise de Masse — Maison</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💪</text></svg>"/>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%23f97316'/><text y='46' x='10' font-size='42' font-family='serif' font-weight='900' fill='white'>M</text><rect x='42' y='18' width='6' height='28' rx='3' fill='white' opacity='.9'/></svg>"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -1332,6 +1332,346 @@
     margin-top: 10px; font-size: 12px; color: var(--muted);
     font-weight: 600; min-height: 18px; transition: color 0.3s;
   }
+
+  /* ════════════════════════════════════
+     ⏱  MINUTEUR DE REPOS
+  ════════════════════════════════════ */
+  .rest-timer-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 3500;
+    background: rgba(8,13,22,0.97);
+    border-top: 1px solid rgba(249,115,22,0.25);
+    backdrop-filter: blur(20px);
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+    padding: 14px 20px;
+  }
+  .rest-timer-bar.visible { transform: translateY(0); }
+  .rest-timer-inner {
+    max-width: 520px; margin: 0 auto;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .rest-timer-ring {
+    flex-shrink: 0;
+    width: 52px; height: 52px;
+    position: relative;
+  }
+  .rest-timer-ring svg { transform: rotate(-90deg); }
+  .rest-timer-ring-bg { fill: none; stroke: var(--border); stroke-width: 4; }
+  .rest-timer-ring-fill {
+    fill: none; stroke: #f97316; stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 126;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.98s linear, stroke 0.3s;
+  }
+  .rest-timer-ring-fill.green { stroke: #22c55e; }
+  .rest-timer-num {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 17px; color: #f1f5f9;
+    transform: none;
+  }
+  .rest-timer-info { flex: 1; min-width: 0; }
+  .rest-timer-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+  }
+  .rest-timer-exo {
+    font-size: 13px; font-weight: 700; color: #e2eaf8;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .rest-timer-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .rest-timer-btn {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--surface2); border: 1px solid var(--border);
+    color: var(--muted); font-size: 14px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s; font-family: 'Manrope', sans-serif;
+  }
+  .rest-timer-btn:hover { background: var(--border); color: #f1f5f9; }
+  .rest-timer-btn.accent { background: rgba(249,115,22,0.15); border-color: rgba(249,115,22,0.3); color: #f97316; }
+  .rest-timer-btn.accent:hover { background: rgba(249,115,22,0.25); }
+
+  /* ════════════════════════════════════
+     ⏱  CHRONOMÈTRE DE SÉANCE
+  ════════════════════════════════════ */
+  .stopwatch-wrap {
+    display: flex; align-items: center; gap: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 14px;
+    cursor: pointer;
+    transition: border-color 0.25s, background 0.25s;
+    user-select: none; -webkit-user-select: none;
+  }
+  .stopwatch-wrap:hover { border-color: var(--muted2); }
+  .stopwatch-wrap.running {
+    border-color: rgba(249,115,22,0.45);
+    background: rgba(249,115,22,0.04);
+  }
+
+  .stopwatch-left {
+    padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 4px;
+    flex: 1;
+  }
+  .stopwatch-eyebrow {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .stopwatch-display {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; line-height: 1; letter-spacing: 0.04em;
+    color: var(--muted);
+    transition: color 0.3s;
+  }
+  .stopwatch-wrap.running .stopwatch-display { color: #f97316; }
+  .stopwatch-hint {
+    font-size: 10px; font-weight: 600; color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .stopwatch-wrap.running .stopwatch-hint { color: rgba(249,115,22,0.6); }
+
+  .stopwatch-right {
+    display: flex; flex-direction: column;
+    gap: 0; border-left: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .stopwatch-btn {
+    padding: 0 22px;
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    background: none; border: none; cursor: pointer;
+    color: var(--muted);
+    transition: background 0.15s, color 0.15s;
+    min-height: 46px;
+  }
+  .stopwatch-btn:hover { background: var(--surface2); color: #f1f5f9; }
+  .stopwatch-btn + .stopwatch-btn { border-top: 1px solid var(--border); }
+  .stopwatch-btn.primary { color: #f97316; }
+  .stopwatch-btn.primary:hover { background: rgba(249,115,22,0.1); }
+
+  .stopwatch-dot {
+    display: inline-block;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--muted); margin-right: 6px;
+    vertical-align: middle;
+    transition: background 0.3s;
+  }
+  .stopwatch-wrap.running .stopwatch-dot {
+    background: #f97316;
+    animation: swPulse 1s ease-in-out infinite;
+  }
+  @keyframes swPulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* ════════════════════════════════════
+     🧮  CALCULATEUR DE MACROS
+  ════════════════════════════════════ */
+  .macro-calc-fab {
+    position: fixed;
+    bottom: 24px; right: 20px;
+    z-index: 2500;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, #f97316, #fbbf24);
+    border: none; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(249,115,22,0.4);
+    font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .macro-calc-fab:hover { transform: scale(1.08); box-shadow: 0 6px 28px rgba(249,115,22,0.55); }
+  .macro-calc-fab.shifted { bottom: 90px; }
+
+  .macro-modal-overlay {
+    position: fixed; inset: 0; z-index: 4500;
+    background: rgba(0,0,0,0.82);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .macro-modal-overlay.visible { opacity: 1; pointer-events: all; }
+  .macro-modal-box {
+    background: #0a0f1c;
+    border: 1px solid #1e2d47;
+    border-radius: 24px;
+    max-width: 460px; width: 100%;
+    max-height: 92vh;
+    display: flex; flex-direction: column;
+    transform: scale(0.93) translateY(14px);
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  }
+  .macro-modal-overlay.visible .macro-modal-box { transform: scale(1) translateY(0); }
+  .macro-modal-header {
+    padding: 24px 28px 18px;
+    border-bottom: 1px solid #1a2540;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    flex-shrink: 0;
+  }
+  .macro-modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; color: #f8fafc; letter-spacing: 0.04em; line-height: 1;
+  }
+  .macro-modal-sub { font-size: 11px; color: var(--muted); margin-top: 5px; }
+  .macro-modal-body { overflow-y: auto; padding: 20px 28px; flex: 1; }
+  .macro-modal-footer { padding: 16px 28px 22px; border-top: 1px solid #1a2540; flex-shrink: 0; }
+
+  .mc-field { margin-bottom: 16px; }
+  .mc-label {
+    display: block;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 7px;
+  }
+  .mc-input-row { display: flex; gap: 8px; }
+  .mc-input {
+    flex: 1; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 11px 14px;
+    font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 600;
+    color: #e2eaf8;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+  .mc-input:focus { border-color: #f97316; }
+  .mc-input::placeholder { color: var(--muted); }
+  .mc-select {
+    flex: 1; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 11px 14px;
+    font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 600;
+    color: #e2eaf8; cursor: pointer; outline: none;
+    transition: border-color 0.2s;
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a5c7a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+    padding-right: 32px;
+  }
+  .mc-select:focus { border-color: #f97316; }
+  .mc-select option { background: #0d1420; }
+  .mc-sex-toggle { display: flex; gap: 6px; }
+  .mc-sex-btn {
+    flex: 1; padding: 11px 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; font-family: 'Manrope', sans-serif;
+    font-size: 12px; font-weight: 700; color: var(--muted);
+    cursor: pointer; transition: all 0.2s; text-align: center;
+  }
+  .mc-sex-btn.active { background: rgba(249,115,22,0.12); border-color: rgba(249,115,22,0.4); color: #f97316; }
+  .mc-divider { border: none; border-top: 1px solid #1a2540; margin: 20px 0; }
+
+  .mc-results {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 16px; padding: 18px;
+    display: none;
+  }
+  .mc-results.visible { display: block; }
+  .mc-results-title {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 14px;
+  }
+  .mc-results-kcal {
+    text-align: center; margin-bottom: 18px;
+    padding-bottom: 16px; border-bottom: 1px solid var(--border);
+  }
+  .mc-kcal-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px; line-height: 1;
+    background: linear-gradient(135deg,#f97316,#fbbf24);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .mc-kcal-label { font-size: 10px; font-weight: 800; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; }
+  .mc-kcal-sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .mc-macros-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .mc-macro-pill {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 12px 8px; text-align: center;
+  }
+  .mc-macro-val {
+    font-family: 'Bebas Neue', sans-serif; font-size: 26px; line-height: 1;
+  }
+  .mc-macro-unit { font-size: 10px; font-weight: 700; color: var(--muted); }
+  .mc-macro-name { font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .mc-warn { font-size: 11px; color: var(--muted); margin-top: 12px; line-height: 1.5; text-align: center; }
+  .mc-calc-btn {
+    width: 100%; padding: 13px;
+    background: linear-gradient(135deg,#f97316,#fbbf24);
+    border: none; border-radius: 12px;
+    font-family: 'Manrope', sans-serif; font-size: 14px; font-weight: 800;
+    color: #000; cursor: pointer; letter-spacing: 0.02em;
+    transition: opacity 0.2s, transform 0.15s;
+  }
+  .mc-calc-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* ════════════════════════════════════
+     💡  MYTHES VS RÉALITÉ
+  ════════════════════════════════════ */
+  .extra-section { margin-top: 56px; }
+  .myth-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+  .myth-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; transition: border-color 0.2s; }
+  .myth-card:hover { border-color: var(--muted2); }
+  .myth-row { display: grid; grid-template-columns: 1fr 1fr; }
+  .myth-side { padding: 16px 18px; font-size: 12px; line-height: 1.7; }
+  .myth-side.wrong { background: rgba(239,68,68,0.04); border-right: 1px solid var(--border); }
+  .myth-side.right  { background: rgba(34,197,94,0.04); }
+  .myth-badge { display: inline-block; font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px; border-radius: 5px; margin-bottom: 8px; }
+  .myth-badge.wrong { background: rgba(239,68,68,0.12); color: #f87171; }
+  .myth-badge.right { background: rgba(34,197,94,0.12); color: #4ade80; }
+  .myth-text { color: #6b82a3; }
+  .myth-text strong { color: #9ab0cc; }
+  @media (max-width: 500px) {
+    .myth-row { grid-template-columns: 1fr; }
+    .myth-side.wrong { border-right: none; border-bottom: 1px solid var(--border); }
+  }
+
+  /* ════════════════════════════════════
+     🩹  DOULEURS & SIGNAUX
+  ════════════════════════════════════ */
+  .pain-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; margin-bottom: 24px; }
+  .pain-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; transition: border-color 0.2s, transform 0.2s; }
+  .pain-card:hover { border-color: var(--muted2); transform: translateY(-2px); }
+  .pain-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .pain-card-icon { font-size: 24px; flex-shrink: 0; }
+  .pain-card-title { font-size: 13px; font-weight: 800; color: #f1f5f9; }
+  .pain-card-zone { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+  .pain-level { display: flex; gap: 4px; margin-bottom: 10px; }
+  .pain-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .pain-dot.active { background: currentColor; }
+  .pain-card-body { font-size: 11px; color: #6b82a3; line-height: 1.75; }
+  .pain-card-body strong { color: #9ab0cc; }
+  .pain-verdict { margin-top: 10px; padding: 8px 11px; border-radius: 8px; font-size: 10px; font-weight: 700; line-height: 1.4; }
+  .pain-verdict.ok   { background: rgba(34,197,94,0.08); color: #4ade80; }
+  .pain-verdict.warn { background: rgba(249,115,22,0.08); color: #fb923c; }
+  .pain-verdict.stop { background: rgba(239,68,68,0.08); color: #f87171; }
+
+  /* ════════════════════════════════════
+     🧠  PSYCHOLOGIE SPORTIVE
+  ════════════════════════════════════ */
+  .psych-intro { background: linear-gradient(135deg, rgba(168,85,247,0.07), rgba(59,130,246,0.07)); border: 1px solid rgba(168,85,247,0.18); border-radius: 16px; padding: 20px 24px; margin-bottom: 24px; font-size: 13px; color: #8ca3c8; line-height: 1.75; }
+  .psych-intro strong { color: #e2eaf8; }
+  .psych-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 10px; margin-bottom: 24px; }
+  .psych-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; position: relative; overflow: hidden; transition: border-color 0.2s, transform 0.2s; }
+  .psych-card:hover { border-color: var(--muted2); transform: translateY(-2px); }
+  .psych-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--pc, #a855f7); }
+  .psych-num { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1; color: var(--pc, #a855f7); opacity: 0.15; position: absolute; top: 10px; right: 14px; pointer-events: none; }
+  .psych-icon { font-size: 26px; margin-bottom: 10px; display: block; }
+  .psych-title { font-size: 13px; font-weight: 800; color: #f1f5f9; margin-bottom: 10px; }
+  .psych-body { font-size: 12px; color: #6b82a3; line-height: 1.75; }
+  .psych-body strong { color: #9ab0cc; }
+  .psych-quote { margin-top: 10px; padding: 10px 14px; border-left: 2px solid var(--pc, #a855f7); font-size: 11px; color: #8ca3c8; font-style: italic; line-height: 1.6; background: rgba(0,0,0,0.15); border-radius: 0 8px 8px 0; }
 </style>
 </head>
 <body>
@@ -1748,20 +2088,20 @@
 
     <!-- PILIERS -->
     <div class="hygiene-pillars">
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">😴</span><div class="hygiene-pillar-name" style="color:#a78bfa">Sommeil</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🧘</span><div class="hygiene-pillar-name" style="color:#34d399">Stress</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🚿</span><div class="hygiene-pillar-name" style="color:#38bdf8">Hygiène</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🦴</span><div class="hygiene-pillar-name" style="color:#fb923c">Mobilité</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🚭</span><div class="hygiene-pillar-name" style="color:#f87171">Substances</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">📱</span><div class="hygiene-pillar-name" style="color:#fbbf24">Écrans</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🧬</span><div class="hygiene-pillar-name" style="color:#e879f9">Suppléments</div></div>
-      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🧠</span><div class="hygiene-pillar-name" style="color:#4ade80">Mental</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(0)"><span class="hygiene-pillar-icon">😴</span><div class="hygiene-pillar-name" style="color:#a78bfa">Sommeil</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(1)"><span class="hygiene-pillar-icon">🚿</span><div class="hygiene-pillar-name" style="color:#38bdf8">Hygiène</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(2)"><span class="hygiene-pillar-icon">🦴</span><div class="hygiene-pillar-name" style="color:#fb923c">Mobilité</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(3)"><span class="hygiene-pillar-icon">🧘</span><div class="hygiene-pillar-name" style="color:#34d399">Stress</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(4)"><span class="hygiene-pillar-icon">📱</span><div class="hygiene-pillar-name" style="color:#fbbf24">Écrans</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(5)"><span class="hygiene-pillar-icon">🚭</span><div class="hygiene-pillar-name" style="color:#f87171">Substances</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(6)"><span class="hygiene-pillar-icon">🧬</span><div class="hygiene-pillar-name" style="color:#e879f9">Suppléments</div></div>
+      <div class="hygiene-pillar" onclick="openHygieneItem(7)"><span class="hygiene-pillar-icon">🧠</span><div class="hygiene-pillar-name" style="color:#4ade80">Mental</div></div>
     </div>
 
     <!-- ACCORDION -->
     <div class="hygiene-accordion">
 
-      <div class="hygiene-item open" style="--hi-color:#a78bfa" onclick="toggleHygiene(this)">
+      <div class="hygiene-item" style="--hi-color:#a78bfa" onclick="toggleHygiene(this)">
         <div class="hygiene-item-head">
           <span class="hygiene-item-emoji">😴</span>
           <div>
@@ -2003,6 +2343,253 @@
 
   </section>
 
+  <!-- ═══ MYTHES VS RÉALITÉ ═══ -->
+  <section class="extra-section">
+    <div class="section-eyebrow">Mythes vs Réalité — Ce que tout le monde croit (à tort)</div>
+
+    <div class="myth-grid">
+
+      <div class="myth-card">
+        <div class="myth-row">
+          <div class="myth-side wrong">
+            <div class="myth-badge wrong">❌ Mythe</div>
+            <div class="myth-text">Il faut souffrir pour progresser. <strong>No pain, no gain.</strong> Si tu ne ressens pas de brûlure intense, la séance ne sert à rien.</div>
+          </div>
+          <div class="myth-side right">
+            <div class="myth-badge right">✓ Réalité</div>
+            <div class="myth-text">La <strong>douleur aiguë = signal d'alarme</strong>. La brûlure musculaire en fin de série est normale. Une douleur articulaire ou tendinale signifie stop — pas continue.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="myth-card">
+        <div class="myth-row">
+          <div class="myth-side wrong">
+            <div class="myth-badge wrong">❌ Mythe</div>
+            <div class="myth-text">Les femmes ne doivent pas faire de musculation sinon elles vont devenir <strong>trop musclées et masculines.</strong></div>
+          </div>
+          <div class="myth-side right">
+            <div class="myth-badge right">✓ Réalité</div>
+            <div class="myth-text">Les femmes produisent <strong>10 à 20× moins de testostérone</strong> que les hommes. La musculation tonifie, améliore la posture et la densité osseuse sans créer un physique masculin.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="myth-card">
+        <div class="myth-row">
+          <div class="myth-side wrong">
+            <div class="myth-badge wrong">❌ Mythe</div>
+            <div class="myth-text">Il faut s'entraîner tous les jours pour progresser vite. Les jours de repos sont une <strong>perte de temps.</strong></div>
+          </div>
+          <div class="myth-side right">
+            <div class="myth-badge right">✓ Réalité</div>
+            <div class="myth-text">Le muscle se <strong>reconstruit pendant le repos</strong>, pas pendant la séance. Sans 48h de récupération par groupe musculaire, on accumule la fatigue et on régresse.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="myth-card">
+        <div class="myth-row">
+          <div class="myth-side wrong">
+            <div class="myth-badge wrong">❌ Mythe</div>
+            <div class="myth-text">Les exercices ciblés font fondre la graisse localement. Des abdos tous les jours = <strong>ventre plat garanti.</strong></div>
+          </div>
+          <div class="myth-side right">
+            <div class="myth-badge right">✓ Réalité</div>
+            <div class="myth-text">La <strong>lipolyse localisée n'existe pas</strong>. On perd de la graisse de façon globale via un déficit calorique. Les abdos renforcent le gainage mais ne "brûlent" pas le ventre.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="myth-card">
+        <div class="myth-row">
+          <div class="myth-side wrong">
+            <div class="myth-badge wrong">❌ Mythe</div>
+            <div class="myth-text">Les protéines en poudre sont des <strong>produits dopants</strong> ou dangereux pour les reins chez les personnes en bonne santé.</div>
+          </div>
+          <div class="myth-side right">
+            <div class="myth-badge right">✓ Réalité</div>
+            <div class="myth-text">La whey est simplement du <strong>lactosérum issu du lait</strong>. Elle est sans danger pour des reins sains. C'est un aliment, pas un médicament. La créatine est la molécule la plus étudiée en sport.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="myth-card">
+        <div class="myth-row">
+          <div class="myth-side wrong">
+            <div class="myth-badge wrong">❌ Mythe</div>
+            <div class="myth-text">Le cardio à jeun brûle <strong>beaucoup plus de graisses</strong> et est indispensable pour sécher.</div>
+          </div>
+          <div class="myth-side right">
+            <div class="myth-badge right">✓ Réalité</div>
+            <div class="myth-text">Le bilan énergétique sur <strong>24h est ce qui compte</strong>, pas le moment. Le cardio à jeun peut même augmenter le catabolisme musculaire. Mange si tu te sens faible.</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ DOULEURS & SIGNAUX ═══ -->
+  <section class="extra-section">
+    <div class="section-eyebrow">Douleurs & Signaux — Savoir écouter son corps</div>
+
+    <div class="pain-grid">
+
+      <div class="pain-card">
+        <div class="pain-card-head">
+          <span class="pain-card-icon">🔥</span>
+          <div>
+            <div class="pain-card-title">Brûlure musculaire</div>
+            <div class="pain-card-zone">Pendant la série</div>
+          </div>
+        </div>
+        <div class="pain-level" style="color:#4ade80">
+          <div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot"></div><div class="pain-dot"></div><div class="pain-dot"></div>
+        </div>
+        <div class="pain-card-body">Accumulation d'acide lactique dans le muscle en effort. Sensation de <strong>brûlure locale</strong> en fin de série. Normale et signe que le muscle travaille à l'intensité voulue.</div>
+        <div class="pain-verdict ok">✓ Continue — c'est le signal que tu cherches</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-head">
+          <span class="pain-card-icon">😣</span>
+          <div>
+            <div class="pain-card-title">Courbatures (DOMS)</div>
+            <div class="pain-card-zone">24–72h après la séance</div>
+          </div>
+        </div>
+        <div class="pain-level" style="color:#fb923c">
+          <div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot"></div><div class="pain-dot"></div>
+        </div>
+        <div class="pain-card-body">Micro-déchirures musculaires en phase de réparation. <strong>Signe de progression</strong>, mais disparaissent avec l'adaptation. Marche légère et protéines accélèrent la récupération.</div>
+        <div class="pain-verdict warn">⚡ Normal — réduis l'intensité ce jour-là</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-head">
+          <span class="pain-card-icon">🦵</span>
+          <div>
+            <div class="pain-card-title">Douleur au genou</div>
+            <div class="pain-card-zone">Pendant les squats / fentes</div>
+          </div>
+        </div>
+        <div class="pain-level" style="color:#f87171">
+          <div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot"></div>
+        </div>
+        <div class="pain-card-body">Souvent causée par un <strong>genou qui dépasse les orteils</strong>, une rétroversion du bassin ou une faiblesse du quadriceps. Vérifie l'alignement genou-orteil, réduis l'amplitude.</div>
+        <div class="pain-verdict stop">🛑 Stop — corrige la technique avant de continuer</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-head">
+          <span class="pain-card-icon">💪</span>
+          <div>
+            <div class="pain-card-title">Douleur à l'épaule</div>
+            <div class="pain-card-zone">Pendant les pompes / pike push-ups</div>
+          </div>
+        </div>
+        <div class="pain-level" style="color:#f87171">
+          <div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot"></div>
+        </div>
+        <div class="pain-card-body">Peut indiquer un <strong>conflit sous-acromial</strong> ou une tension de la coiffe des rotateurs. Vérifie la position des coudes (45° du corps), évite les coudes écartés à 90°.</div>
+        <div class="pain-verdict stop">🛑 Stop — consulte si la douleur persiste 48h</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-head">
+          <span class="pain-card-icon">🧠</span>
+          <div>
+            <div class="pain-card-title">Maux de tête à l'effort</div>
+            <div class="pain-card-zone">Pendant ou après la séance</div>
+          </div>
+        </div>
+        <div class="pain-level" style="color:#fb923c">
+          <div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot"></div><div class="pain-dot"></div>
+        </div>
+        <div class="pain-card-body">Causes fréquentes : <strong>déshydratation, hypoglycémie, apnée involontaire</strong> pendant les séries. Bois avant la séance, mange 1h avant, et expire à l'effort.</div>
+        <div class="pain-verdict warn">⚡ Pause — hydrate-toi et respire correctement</div>
+      </div>
+
+      <div class="pain-card">
+        <div class="pain-card-head">
+          <span class="pain-card-icon">⚡</span>
+          <div>
+            <div class="pain-card-title">Douleur aiguë et soudaine</div>
+            <div class="pain-card-zone">N'importe quand</div>
+          </div>
+        </div>
+        <div class="pain-level" style="color:#f87171">
+          <div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div><div class="pain-dot active"></div>
+        </div>
+        <div class="pain-card-body">Claquage, élongation, entorse ou pire. Une douleur <strong>nette, localisée et soudaine</strong> = stop immédiat. Protocole RICE : Repos, Glace, Compression, Élévation.</div>
+        <div class="pain-verdict stop">🚨 Arrêt total — consultation médicale obligatoire</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ PSYCHOLOGIE SPORTIVE ═══ -->
+  <section class="extra-section">
+    <div class="section-eyebrow">Psychologie sportive — La tête fait 50% du travail</div>
+
+    <div class="psych-intro">
+      Les athlètes qui progressent le plus vite ne sont pas nécessairement les plus talentueux — ce sont ceux qui ont <strong>les meilleures habitudes mentales</strong>. La relation que tu entretiens avec l'effort, l'échec et la progression détermine ta trajectoire sur le long terme.
+    </div>
+
+    <div class="psych-grid">
+
+      <div class="psych-card" style="--pc:#a855f7">
+        <div class="psych-num">01</div>
+        <span class="psych-icon">🎯</span>
+        <div class="psych-title">L'identité avant les objectifs</div>
+        <div class="psych-body">Ne dis pas <em>"je veux perdre du poids"</em> — dis <strong>"je suis quelqu'un qui prend soin de son corps"</strong>. Les objectifs motivent, mais l'identité ancre. Chaque séance faite renforce cette identité.</div>
+        <div class="psych-quote">Ce n'est pas l'objectif qui change le comportement, c'est l'image que tu as de toi-même.</div>
+      </div>
+
+      <div class="psych-card" style="--pc:#3b82f6">
+        <div class="psych-num">02</div>
+        <span class="psych-icon">📉</span>
+        <div class="psych-title">Normalise les mauvaises séances</div>
+        <div class="psych-body">Tout le monde a des jours sans énergie. Une séance à <strong>60% d'intensité vaut infiniment mieux que zéro</strong>. Le danger n'est pas la mauvaise séance — c'est la spirale d'abandon qu'elle peut déclencher si tu la gères mal.</div>
+        <div class="psych-quote">Une séance médiocre faite régulièrement bat une séance parfaite faite rarement.</div>
+      </div>
+
+      <div class="psych-card" style="--pc:#22c55e">
+        <div class="psych-num">03</div>
+        <span class="psych-icon">🪞</span>
+        <div class="psych-title">Le piège de la comparaison</div>
+        <div class="psych-body">Les réseaux sociaux montrent des physiques après <strong>5 à 10 ans de travail</strong>, souvent sous éclairage optimal et parfois assistés chimiquement. Compare-toi uniquement à qui tu étais il y a 3 mois.</div>
+        <div class="psych-quote">Ta progression est la seule qui compte. Ton point de départ n'est pas le leur.</div>
+      </div>
+
+      <div class="psych-card" style="--pc:#f97316">
+        <div class="psych-num">04</div>
+        <span class="psych-icon">🔁</span>
+        <div class="psych-title">Le système bat la motivation</div>
+        <div class="psych-body">La motivation est une émotion — elle fluctue. Un <strong>système bien construit fonctionne même sans motivation</strong> : heure fixe, tenue préparée la veille, programme affiché. Réduis les décisions à prendre.</div>
+        <div class="psych-quote">Tu ne monteras pas au niveau de tes objectifs. Tu descendras au niveau de tes habitudes.</div>
+      </div>
+
+      <div class="psych-card" style="--pc:#06b6d4">
+        <div class="psych-num">05</div>
+        <span class="psych-icon">🏆</span>
+        <div class="psych-title">Célèbre les petites victoires</div>
+        <div class="psych-body">Faire <strong>1 rep de plus qu'il y a 2 semaines</strong> est une victoire réelle. Ton cerveau libère de la dopamine face aux progrès — nourris ce circuit en notant tes performances et en les reconnaissant consciemment.</div>
+        <div class="psych-quote">Le progrès, même minuscule, est la récompense la plus puissante qui soit.</div>
+      </div>
+
+      <div class="psych-card" style="--pc:#ec4899">
+        <div class="psych-num">06</div>
+        <span class="psych-icon">🧩</span>
+        <div class="psych-title">Gère le "tout ou rien"</div>
+        <div class="psych-body">Le perfectionnisme sportif est un piège : <em>"je n'ai pas pu faire la séance complète donc elle ne compte pas"</em>. <strong>Faux.</strong> 20 minutes valent mieux que 0. 3 exercices sur 5 = progression.</div>
+        <div class="psych-quote">Ne laisse jamais rater deux fois de suite. Une fois est un accident. Deux fois est le début d'une habitude.</div>
+      </div>
+
+    </div>
+  </section>
+
 </div>
 
 <footer>
@@ -2032,6 +2619,124 @@
 
 <!-- TOAST -->
 <div id="toast" class="toast"></div>
+
+<!-- ⏱ MINUTEUR DE REPOS -->
+<div id="restTimerBar" class="rest-timer-bar">
+  <div class="rest-timer-inner">
+    <div class="rest-timer-ring">
+      <svg width="52" height="52" viewBox="0 0 52 52">
+        <circle class="rest-timer-ring-bg" cx="26" cy="26" r="20"/>
+        <circle class="rest-timer-ring-fill" id="restRingFill" cx="26" cy="26" r="20"/>
+      </svg>
+      <div class="rest-timer-num" id="restTimerNum">60</div>
+    </div>
+    <div class="rest-timer-info">
+      <div class="rest-timer-label">Récupération</div>
+      <div class="rest-timer-exo" id="restTimerExo">—</div>
+    </div>
+    <div class="rest-timer-actions">
+      <button class="rest-timer-btn accent" id="restTimerPauseBtn" onclick="toggleRestPause()" title="Pause / Reprendre">⏸</button>
+      <button class="rest-timer-btn" onclick="skipRestTimer()" title="Passer">⏭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🧮 FAB CALCULATEUR -->
+<button class="macro-calc-fab" id="macroFab" onclick="openMacroCalc()" title="Calculateur de macros">🧮</button>
+
+<!-- 🧮 MODAL CALCULATEUR DE MACROS -->
+<div id="macroModal" class="macro-modal-overlay" onclick="if(event.target===this)closeMacroCalc()">
+  <div class="macro-modal-box">
+    <div class="macro-modal-header">
+      <div>
+        <div class="macro-modal-title">Calculateur de Macros</div>
+        <div class="macro-modal-sub">Formule Harris-Benedict — Personnalisé pour ton objectif</div>
+      </div>
+      <button class="cgu-modal-close" onclick="closeMacroCalc()">✕</button>
+    </div>
+    <div class="macro-modal-body">
+
+      <div class="mc-field">
+        <label class="mc-label">Sexe</label>
+        <div class="mc-sex-toggle">
+          <button class="mc-sex-btn active" id="mcSexH" onclick="setSex('H')">♂ Homme</button>
+          <button class="mc-sex-btn" id="mcSexF" onclick="setSex('F')">♀ Femme</button>
+        </div>
+      </div>
+
+      <div class="mc-input-row" style="gap:12px">
+        <div class="mc-field" style="flex:1;margin-bottom:0">
+          <label class="mc-label">Âge</label>
+          <input class="mc-input" id="mcAge" type="number" min="14" max="90" placeholder="25" />
+        </div>
+        <div class="mc-field" style="flex:1;margin-bottom:0">
+          <label class="mc-label">Poids (kg)</label>
+          <input class="mc-input" id="mcWeight" type="number" min="30" max="250" placeholder="75" />
+        </div>
+        <div class="mc-field" style="flex:1;margin-bottom:0">
+          <label class="mc-label">Taille (cm)</label>
+          <input class="mc-input" id="mcHeight" type="number" min="120" max="230" placeholder="175" />
+        </div>
+      </div>
+
+      <hr class="mc-divider"/>
+
+      <div class="mc-field">
+        <label class="mc-label">Niveau d'activité</label>
+        <select class="mc-select" id="mcActivity">
+          <option value="1.2">Sédentaire — bureau, peu de sport</option>
+          <option value="1.375">Légèrement actif — 1–2 séances/sem</option>
+          <option value="1.55" selected>Modérément actif — 3–5 séances/sem</option>
+          <option value="1.725">Très actif — 6–7 séances/sem</option>
+          <option value="1.9">Extrêmement actif — sport + travail physique</option>
+        </select>
+      </div>
+
+      <div class="mc-field" style="margin-bottom:0">
+        <label class="mc-label">Objectif</label>
+        <select class="mc-select" id="mcGoal">
+          <option value="bulk">💪 Prise de masse (+300 kcal)</option>
+          <option value="maintain">⚖️ Maintenance (0 kcal)</option>
+          <option value="cut_soft">🔥 Sèche douce (–300 kcal)</option>
+          <option value="cut">❄️ Sèche (–500 kcal)</option>
+        </select>
+      </div>
+
+      <hr class="mc-divider"/>
+
+      <div class="mc-results" id="mcResults">
+        <div class="mc-results-title">Tes objectifs quotidiens</div>
+        <div class="mc-results-kcal">
+          <div class="mc-kcal-num" id="mcKcalNum">—</div>
+          <div class="mc-kcal-label">kcal / jour</div>
+          <div class="mc-kcal-sub" id="mcKcalSub"></div>
+        </div>
+        <div class="mc-macros-grid">
+          <div class="mc-macro-pill">
+            <div class="mc-macro-val" id="mcProt" style="color:#f97316">—</div>
+            <div class="mc-macro-unit">g</div>
+            <div class="mc-macro-name">Protéines</div>
+          </div>
+          <div class="mc-macro-pill">
+            <div class="mc-macro-val" id="mcCarbs" style="color:#3b82f6">—</div>
+            <div class="mc-macro-unit">g</div>
+            <div class="mc-macro-name">Glucides</div>
+          </div>
+          <div class="mc-macro-pill">
+            <div class="mc-macro-val" id="mcFat" style="color:#a855f7">—</div>
+            <div class="mc-macro-unit">g</div>
+            <div class="mc-macro-name">Lipides</div>
+          </div>
+        </div>
+        <div class="mc-warn" id="mcWarn"></div>
+      </div>
+
+    </div>
+    <div class="macro-modal-footer">
+      <button class="mc-calc-btn" onclick="calculateMacros()">Calculer mes macros</button>
+    </div>
+  </div>
+</div>
 
 <!-- CGU CONSENT BANNER -->
 <div id="cguBanner" class="cgu-banner">
@@ -2316,6 +3021,19 @@ function clearCookie() {
 let activeDay = 0;
 const checked = loadCookie();
 
+// Stopwatch state — must be declared before renderMain()
+let swElapsed = 0;
+let swRunning = false;
+let swInterval = null;
+
+function formatSW(s) {
+  const h = Math.floor(s / 3600);
+  const m = Math.floor((s % 3600) / 60);
+  const sec = s % 60;
+  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+  return `${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+}
+
 function setDay(idx) {
   activeDay = idx;
   renderNav();
@@ -2324,6 +3042,7 @@ function setDay(idx) {
 
 function toggleExo(dayIdx, exoIdx) {
   const key = `${dayIdx}-${exoIdx}`;
+  const wasChecked = !!checked[key];
   checked[key] = !checked[key];
   if (!checked[key]) delete checked[key];
   saveCookie();
@@ -2442,6 +3161,19 @@ function renderMain() {
         <div>
           <div class="day-tag">${d.tag}</div>
           <div class="day-title">${d.emoji} ${d.focus}</div>
+          <div style="margin-top:14px">
+            <div class="stopwatch-wrap ${swRunning ? 'running' : ''}" onclick="toggleStopwatch()">
+              <div class="stopwatch-left">
+                <div class="stopwatch-eyebrow"><span class="stopwatch-dot"></span>Chronomètre de séance</div>
+                <div class="stopwatch-display" id="swDisplay">${formatSW(swElapsed)}</div>
+                <div class="stopwatch-hint">${swRunning ? 'En cours — clique pour mettre en pause' : swElapsed > 0 ? 'En pause — clique pour reprendre' : 'Clique pour démarrer'}</div>
+              </div>
+              <div class="stopwatch-right" onclick="event.stopPropagation()">
+                <button class="stopwatch-btn primary" onclick="toggleStopwatch()" title="${swRunning ? 'Pause' : 'Démarrer'}">${swRunning ? '⏸' : '▶'}</button>
+                <button class="stopwatch-btn" onclick="resetStopwatch()" title="Remettre à zéro">↺</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="progress-ring-wrap">
           <svg width="72" height="72" viewBox="0 0 72 72">
@@ -2489,8 +3221,8 @@ function renderMain() {
                   <div class="stat-pill-label">reps</div>
                 </div>
                 <div class="stat-sep"></div>
-                <div class="stat-pill">
-                  <div class="stat-pill-val stat-pill-rest" style="color:var(--muted)">${ex.rest}</div>
+                <div class="stat-pill" onclick="event.stopPropagation(); startRestTimer('${ex.rest}', '${ex.name.replace(/'/g,"\\'")}');" style="cursor:pointer" title="Lancer le minuteur de repos">
+                  <div class="stat-pill-val stat-pill-rest" style="color:#f97316">⏱ ${ex.rest}</div>
                   <div class="stat-pill-label">repos</div>
                 </div>
               </div>
@@ -2554,7 +3286,171 @@ function initCGU() {
   }
 }
 
+// ════════════════════════════════════
+// ⏱  MINUTEUR DE REPOS
+// ════════════════════════════════════
+let restTimerInterval = null;
+let restTimerTotal = 60;
+let restTimerLeft = 60;
+let restTimerPaused = false;
+
+function parseRestSeconds(str) {
+  const m = String(str).match(/(\d+)/);
+  return m ? parseInt(m[1]) : 60;
+}
+
+function startRestTimer(restStr, exoName) {
+  clearInterval(restTimerInterval);
+  restTimerTotal = parseRestSeconds(restStr);
+  restTimerLeft = restTimerTotal;
+  restTimerPaused = false;
+  document.getElementById('restTimerExo').textContent = exoName || '—';
+  document.getElementById('restTimerPauseBtn').textContent = '⏸';
+  document.getElementById('restTimerBar').classList.add('visible');
+  document.getElementById('macroFab').classList.add('shifted');
+  updateRestRing();
+  restTimerInterval = setInterval(() => {
+    if (restTimerPaused) return;
+    restTimerLeft--;
+    updateRestRing();
+    if (restTimerLeft <= 0) {
+      clearInterval(restTimerInterval);
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+      showToast('✅ Récupération terminée — C\'est reparti !');
+      setTimeout(hideRestTimer, 1200);
+    }
+  }, 1000);
+}
+
+function updateRestRing() {
+  const circ = 125.66;
+  const pct = restTimerLeft / restTimerTotal;
+  const offset = circ * (1 - pct);
+  const fill = document.getElementById('restRingFill');
+  const num  = document.getElementById('restTimerNum');
+  if (!fill || !num) return;
+  fill.style.strokeDashoffset = offset;
+  fill.classList.toggle('green', restTimerLeft <= 5);
+  num.textContent = restTimerLeft;
+}
+
+function toggleRestPause() {
+  restTimerPaused = !restTimerPaused;
+  document.getElementById('restTimerPauseBtn').textContent = restTimerPaused ? '▶' : '⏸';
+}
+
+function skipRestTimer() {
+  clearInterval(restTimerInterval);
+  hideRestTimer();
+}
+
+function hideRestTimer() {
+  document.getElementById('restTimerBar').classList.remove('visible');
+  document.getElementById('macroFab').classList.remove('shifted');
+}
+
+// ════════════════════════════════════
+// ⏱  CHRONOMÈTRE DE SÉANCE
+// ════════════════════════════════════
+function startStopwatch() {
+  if (swRunning) return;
+  swRunning = true;
+  swInterval = setInterval(() => {
+    swElapsed++;
+    const el = document.getElementById('swDisplay');
+    if (el) el.textContent = formatSW(swElapsed);
+  }, 1000);
+}
+
+function toggleStopwatch() {
+  if (swRunning) {
+    swRunning = false;
+    clearInterval(swInterval);
+  } else {
+    startStopwatch();
+  }
+  renderMain();
+}
+
+function resetStopwatch() {
+  swRunning = false;
+  clearInterval(swInterval);
+  swElapsed = 0;
+  renderMain();
+}
+
+// ════════════════════════════════════
+// 🧮  CALCULATEUR DE MACROS
+// ════════════════════════════════════
+let mcSex = 'H';
+
+function setSex(s) {
+  mcSex = s;
+  document.getElementById('mcSexH').classList.toggle('active', s === 'H');
+  document.getElementById('mcSexF').classList.toggle('active', s === 'F');
+}
+
+function openMacroCalc() {
+  document.getElementById('macroModal').classList.add('visible');
+}
+
+function closeMacroCalc() {
+  document.getElementById('macroModal').classList.remove('visible');
+}
+
+function calculateMacros() {
+  const age      = parseFloat(document.getElementById('mcAge').value);
+  const weight   = parseFloat(document.getElementById('mcWeight').value);
+  const height   = parseFloat(document.getElementById('mcHeight').value);
+  const activity = parseFloat(document.getElementById('mcActivity').value);
+  const goal     = document.getElementById('mcGoal').value;
+
+  if (!age || !weight || !height || isNaN(age) || isNaN(weight) || isNaN(height)) {
+    showToast('⚠️ Remplis tous les champs pour calculer');
+    return;
+  }
+
+  // Harris-Benedict révisé
+  let bmr = mcSex === 'H'
+    ? 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
+    : 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+
+  const tdee   = Math.round(bmr * activity);
+  const adjust = { bulk: 300, maintain: 0, cut_soft: -300, cut: -500 };
+  const target = tdee + adjust[goal];
+
+  const protFactor = (goal === 'cut' || goal === 'cut_soft') ? 2.2 : 1.8;
+  const prot  = Math.round(weight * protFactor);
+  const fat   = Math.round(weight * 0.9);
+  const carbs = Math.max(0, Math.round((target - prot * 4 - fat * 9) / 4));
+
+  document.getElementById('mcKcalNum').textContent = target;
+  document.getElementById('mcKcalSub').textContent = `Maintenance : ${tdee} kcal · BMR : ${Math.round(bmr)} kcal`;
+  document.getElementById('mcProt').textContent  = prot;
+  document.getElementById('mcCarbs').textContent = carbs;
+  document.getElementById('mcFat').textContent   = fat;
+
+  const labels = { bulk: 'prise de masse', maintain: 'maintenance', cut_soft: 'sèche douce', cut: 'sèche' };
+  document.getElementById('mcWarn').textContent =
+    `Valeurs indicatives pour un objectif ${labels[goal]}. Ajuste selon ta sensation de faim et ta progression réelle.`;
+  document.getElementById('mcResults').classList.add('visible');
+}
+
 // ─── HYGIENE DE VIE ───
+function openHygieneItem(index) {
+  const items = document.querySelectorAll('.hygiene-item');
+  const target = items[index];
+  if (!target) return;
+  const isOpen = target.classList.contains('open');
+  // Close all
+  items.forEach(el => el.classList.remove('open'));
+  // Open target if it wasn't already open
+  if (!isOpen) {
+    target.classList.add('open');
+    target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
 function toggleHygiene(el) {
   el.classList.toggle('open');
 }
