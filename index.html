@@ -3161,19 +3161,6 @@ function renderMain() {
         <div>
           <div class="day-tag">${d.tag}</div>
           <div class="day-title">${d.emoji} ${d.focus}</div>
-          <div style="margin-top:14px">
-            <div class="stopwatch-wrap ${swRunning ? 'running' : ''}" onclick="toggleStopwatch()">
-              <div class="stopwatch-left">
-                <div class="stopwatch-eyebrow"><span class="stopwatch-dot"></span>Chronomètre de séance</div>
-                <div class="stopwatch-display" id="swDisplay">${formatSW(swElapsed)}</div>
-                <div class="stopwatch-hint">${swRunning ? 'En cours — clique pour mettre en pause' : swElapsed > 0 ? 'En pause — clique pour reprendre' : 'Clique pour démarrer'}</div>
-              </div>
-              <div class="stopwatch-right" onclick="event.stopPropagation()">
-                <button class="stopwatch-btn primary" onclick="toggleStopwatch()" title="${swRunning ? 'Pause' : 'Démarrer'}">${swRunning ? '⏸' : '▶'}</button>
-                <button class="stopwatch-btn" onclick="resetStopwatch()" title="Remettre à zéro">↺</button>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="progress-ring-wrap">
           <svg width="72" height="72" viewBox="0 0 72 72">
@@ -3187,6 +3174,18 @@ function renderMain() {
             <text x="36" y="41" text-anchor="middle" fill="white" font-size="14" font-weight="700" font-family="Manrope,sans-serif">${prog === 100 ? '✓' : prog + '%'}</text>
           </svg>
           <div class="progress-label">${prog === 100 ? 'Terminé !' : 'Progression'}</div>
+        </div>
+      </div>
+
+      <div class="stopwatch-wrap ${swRunning ? 'running' : ''}" onclick="toggleStopwatch()" style="margin-bottom:16px">
+        <div class="stopwatch-left">
+          <div class="stopwatch-eyebrow"><span class="stopwatch-dot"></span>Chronomètre de séance</div>
+          <div class="stopwatch-display" id="swDisplay">${formatSW(swElapsed)}</div>
+          <div class="stopwatch-hint">${swRunning ? 'En cours — clique pour mettre en pause' : swElapsed > 0 ? 'En pause — clique pour reprendre' : 'Clique pour démarrer'}</div>
+        </div>
+        <div class="stopwatch-right" onclick="event.stopPropagation()">
+          <button class="stopwatch-btn primary" onclick="toggleStopwatch()" title="${swRunning ? 'Pause' : 'Démarrer'}">${swRunning ? '⏸' : '▶'}</button>
+          <button class="stopwatch-btn" onclick="resetStopwatch()" title="Remettre à zéro">↺</button>
         </div>
       </div>
 
