@@ -1003,6 +1003,162 @@
     padding: 0;
   }
   .footer-cgu-link:hover { color: #f97316; border-bottom-color: rgba(249,115,22,0.4); }
+
+  /* ─── SECHE SECTION ─── */
+  .seche-section { margin-top: 56px; }
+
+  .seche-intro {
+    background: linear-gradient(135deg, rgba(59,130,246,0.07), rgba(168,85,247,0.07));
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #8ca3c8;
+    line-height: 1.75;
+  }
+  .seche-intro strong { color: #e2eaf8; }
+
+  .seche-phase-bar {
+    display: flex;
+    gap: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #1a2540;
+    margin-bottom: 24px;
+  }
+  .seche-phase {
+    flex: 1;
+    padding: 16px 14px;
+    text-align: center;
+    position: relative;
+  }
+  .seche-phase-masse  { background: rgba(249,115,22,0.08);  border-right: 1px solid #1a2540; }
+  .seche-phase-trans  { background: rgba(234,179,8,0.08);   border-right: 1px solid #1a2540; }
+  .seche-phase-seche  { background: rgba(59,130,246,0.08);  }
+  .seche-phase-label {
+    font-size: 8px; font-weight: 800; letter-spacing: 0.18em;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .seche-phase-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px; letter-spacing: 0.04em; color: #f8fafc;
+    margin-bottom: 4px; line-height: 1;
+  }
+  .seche-phase-detail { font-size: 10px; color: var(--muted); line-height: 1.4; }
+
+  .seche-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .seche-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .seche-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+  .seche-card.blue::before  { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .seche-card.purple::before{ background: linear-gradient(90deg, #a855f7, #c084fc); }
+  .seche-card.cyan::before  { background: linear-gradient(90deg, #06b6d4, #67e8f9); }
+  .seche-card.green::before { background: linear-gradient(90deg, #22c55e, #4ade80); }
+  .seche-card.orange::before{ background: linear-gradient(90deg, #f97316, #fbbf24); }
+  .seche-card.red::before   { background: linear-gradient(90deg, #ef4444, #f87171); }
+  .seche-card:hover { border-color: var(--muted2); transform: translateY(-2px); }
+
+  .seche-card-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 14px;
+  }
+  .seche-card-icon { font-size: 26px; flex-shrink: 0; }
+  .seche-card-title { font-size: 14px; font-weight: 800; color: #f1f5f9; letter-spacing: 0.01em; }
+  .seche-card-body { font-size: 12px; color: #6b82a3; line-height: 1.75; }
+  .seche-card-body strong { color: #9ab0cc; }
+  .seche-card-body ul { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 5px; }
+  .seche-card-body li { padding-left: 16px; position: relative; }
+  .seche-card-body li::before { content: '→'; position: absolute; left: 0; font-weight: 700; }
+  .seche-card.blue   .seche-card-body li::before { color: #60a5fa; }
+  .seche-card.purple .seche-card-body li::before { color: #c084fc; }
+  .seche-card.cyan   .seche-card-body li::before { color: #67e8f9; }
+  .seche-card.green  .seche-card-body li::before { color: #4ade80; }
+  .seche-card.orange .seche-card-body li::before { color: #fbbf24; }
+  .seche-card.red    .seche-card-body li::before { color: #f87171; }
+
+  .seche-macro-compare {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .seche-table-head {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 18px;
+  }
+  .seche-th {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .seche-table-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    padding: 14px 18px;
+    border-bottom: 1px solid #0e1726;
+    align-items: center;
+    transition: background 0.15s;
+  }
+  .seche-table-row:last-child { border-bottom: none; }
+  .seche-table-row:hover { background: rgba(255,255,255,0.02); }
+  .seche-td { font-size: 13px; color: #8ca3c8; }
+  .seche-td:first-child { font-weight: 700; color: #c8d5e8; font-size: 13px; }
+  .seche-val-masse  { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: #f97316; }
+  .seche-val-seche  { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: #3b82f6; }
+
+  .seche-warning {
+    background: rgba(239,68,68,0.07);
+    border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: #fca5a5;
+    line-height: 1.65;
+  }
+  .seche-warning-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .seche-warning strong { color: #fca5a5; }
+
+  .seche-tip-row {
+    display: flex; gap: 10px; margin-bottom: 10px; flex-wrap: wrap;
+  }
+  .seche-tip-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 12px; color: #8ca3c8;
+    flex: 1; min-width: 180px;
+    transition: border-color 0.2s;
+  }
+  .seche-tip-pill:hover { border-color: var(--muted2); }
+  .seche-tip-pill-icon { font-size: 18px; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -1218,6 +1374,193 @@
           <div class="meal-detail">Protéines à digestion lente (fromage, œufs, légumineuses) · Légumes vapeur · Évite les glucides lourds le soir si tu vises la sèche simultanée</div>
         </div>
       </div>
+    </div>
+
+  </section>
+
+  <!-- SECHE -->
+  <section class="seche-section">
+    <div class="section-eyebrow">Phase de sèche — Après la prise de masse</div>
+
+    <div class="seche-intro">
+      La <strong>sèche</strong> est la phase qui suit la prise de masse : son objectif est d'éliminer la graisse accumulée tout en <strong>préservant au maximum le muscle construit</strong>. Elle repose sur un déficit calorique progressif, un maintien des protéines élevé et une adaptation de l'entraînement. Ne démarre pas une sèche trop tôt — attends d'avoir une base musculaire solide (minimum <strong>3–6 mois</strong> de prise de masse efficace).
+    </div>
+
+    <!-- PHASES -->
+    <div class="seche-phase-bar">
+      <div class="seche-phase seche-phase-masse">
+        <div class="seche-phase-label" style="color:#f97316">Phase 1</div>
+        <div class="seche-phase-title">Prise de masse</div>
+        <div class="seche-phase-detail">Surplus +200–300 kcal<br>3–6 mois min.</div>
+      </div>
+      <div class="seche-phase seche-phase-trans">
+        <div class="seche-phase-label" style="color:#eab308">Transition</div>
+        <div class="seche-phase-title">Maintenance</div>
+        <div class="seche-phase-detail">Calories d'entretien<br>2–4 semaines</div>
+      </div>
+      <div class="seche-phase seche-phase-seche">
+        <div class="seche-phase-label" style="color:#3b82f6">Phase 2</div>
+        <div class="seche-phase-title">Sèche</div>
+        <div class="seche-phase-detail">Déficit –300–500 kcal<br>8–16 semaines</div>
+      </div>
+    </div>
+
+    <!-- COMPARISON TABLE -->
+    <div class="seche-macro-compare">
+      <div class="seche-table-head">
+        <div class="seche-th">Paramètre</div>
+        <div class="seche-th" style="color:#f97316">🔥 Masse</div>
+        <div class="seche-th" style="color:#3b82f6">❄️ Sèche</div>
+      </div>
+      <div class="seche-table-row">
+        <div class="seche-td">Balance calorique</div>
+        <div class="seche-td"><span class="seche-val-masse">+200–300</span> <span style="font-size:10px;color:var(--muted)">kcal</span></div>
+        <div class="seche-td"><span class="seche-val-seche">–300–500</span> <span style="font-size:10px;color:var(--muted)">kcal</span></div>
+      </div>
+      <div class="seche-table-row">
+        <div class="seche-td">Protéines</div>
+        <div class="seche-td"><span class="seche-val-masse">1,6–2 g</span> <span style="font-size:10px;color:var(--muted)">/kg</span></div>
+        <div class="seche-td"><span class="seche-val-seche">2–2,4 g</span> <span style="font-size:10px;color:var(--muted)">/kg</span></div>
+      </div>
+      <div class="seche-table-row">
+        <div class="seche-td">Glucides</div>
+        <div class="seche-td"><span class="seche-val-masse">4–6 g</span> <span style="font-size:10px;color:var(--muted)">/kg</span></div>
+        <div class="seche-td"><span class="seche-val-seche">2–3 g</span> <span style="font-size:10px;color:var(--muted)">/kg</span></div>
+      </div>
+      <div class="seche-table-row">
+        <div class="seche-td">Lipides</div>
+        <div class="seche-td"><span class="seche-val-masse">0,8–1 g</span> <span style="font-size:10px;color:var(--muted)">/kg</span></div>
+        <div class="seche-td"><span class="seche-val-seche">0,7–1 g</span> <span style="font-size:10px;color:var(--muted)">/kg</span></div>
+      </div>
+      <div class="seche-table-row">
+        <div class="seche-td">Cardio</div>
+        <div class="seche-td" style="color:#8ca3c8;font-size:12px">Optionnel</div>
+        <div class="seche-td" style="color:#3b82f6;font-size:12px;font-weight:700">2–4×/sem</div>
+      </div>
+      <div class="seche-table-row">
+        <div class="seche-td">Perte visée</div>
+        <div class="seche-td" style="color:#f97316;font-size:12px;font-weight:700">+0,5 kg/mois</div>
+        <div class="seche-td" style="color:#3b82f6;font-size:12px;font-weight:700">–0,5 kg/sem</div>
+      </div>
+    </div>
+
+    <!-- ADVICE CARDS -->
+    <div class="seche-grid">
+
+      <div class="seche-card blue">
+        <div class="seche-card-head">
+          <span class="seche-card-icon">🍽️</span>
+          <div class="seche-card-title">Déficit calorique maîtrisé</div>
+        </div>
+        <div class="seche-card-body">
+          <p>Un déficit de <strong>300 à 500 kcal/jour</strong> est le sweet spot : assez pour perdre de la graisse, pas assez pour cataboliser le muscle. Évite les régimes drastiques.</p>
+          <ul>
+            <li>Calcule ta maintenance (poids × 30 à 35 kcal)</li>
+            <li>Réduis progressivement, pas d'un coup</li>
+            <li>1 à 2 refeed days par semaine si sèche longue</li>
+            <li>Ne descends jamais sous 1 600 kcal/jour</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="seche-card purple">
+        <div class="seche-card-head">
+          <span class="seche-card-icon">🥩</span>
+          <div class="seche-card-title">Protéines — La priorité absolue</div>
+        </div>
+        <div class="seche-card-body">
+          <p>En sèche, les protéines sont ton <strong>bouclier anti-catabolisme</strong>. Augmente l'apport à <strong>2–2,4 g/kg</strong> pour préserver la masse musculaire malgré le déficit.</p>
+          <ul>
+            <li>Blanc de poulet, dinde, thon, cabillaud</li>
+            <li>Blanc d'œuf (faible en lipides)</li>
+            <li>Fromage blanc 0%, skyr nature</li>
+            <li>Protéines végétales : tofu, edamame, tempeh</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="seche-card cyan">
+        <div class="seche-card-head">
+          <span class="seche-card-icon">🏃</span>
+          <div class="seche-card-title">Cardio — Brûle sans sacrifier</div>
+        </div>
+        <div class="seche-card-body">
+          <p>Le cardio accélère le déficit sans couper davantage la nourriture. Privilégie le <strong>LISS</strong> (Low Intensity Steady State) pour ménager le muscle.</p>
+          <ul>
+            <li>Marche rapide 45–60 min à jeun ou en fin de journée</li>
+            <li>Vélo modéré, natation, elliptique</li>
+            <li>HIIT 1×/semaine max (intense mais court)</li>
+            <li>Évite le cardio juste avant ta musculation</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="seche-card green">
+        <div class="seche-card-head">
+          <span class="seche-card-icon">🥦</span>
+          <div class="seche-card-title">Aliments à privilégier</div>
+        </div>
+        <div class="seche-card-body">
+          <p>Remplis ton assiette d'aliments <strong>à haute densité nutritive et faible densité calorique</strong> pour rester rassasié malgré le déficit.</p>
+          <ul>
+            <li>Légumes à volonté : brocoli, courgette, épinards, concombre</li>
+            <li>Fruits peu sucrés : fraises, framboises, pamplemousse</li>
+            <li>Riz brun, patate douce (quantités réduites)</li>
+            <li>Bouillons, thé vert, café (coupe-faim naturels)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="seche-card orange">
+        <div class="seche-card-head">
+          <span class="seche-card-icon">🏋️</span>
+          <div class="seche-card-title">Entraînement en sèche</div>
+        </div>
+        <div class="seche-card-body">
+          <p>Garde ton programme de musculation <strong>aussi intense qu'en prise de masse</strong>. C'est le signal envoyé aux muscles pour qu'ils restent. Ne réduis pas les charges.</p>
+          <ul>
+            <li>Maintiens les charges et les séries — ne réduis pas</li>
+            <li>Ajoute 1 à 2 exercices de gainage isométrique</li>
+            <li>Intègre des super-sets pour densifier l'entraînement</li>
+            <li>Récupération inter-série : 60–90s max en sèche</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="seche-card red">
+        <div class="seche-card-head">
+          <span class="seche-card-icon">🚫</span>
+          <div class="seche-card-title">Aliments à limiter</div>
+        </div>
+        <div class="seche-card-body">
+          <p>Certains aliments sabotent la sèche en provoquant rétention d'eau, pics d'insuline ou apports caloriques cachés. Limite-les drastiquement.</p>
+          <ul>
+            <li>Alcool (7 kcal/g + inhibe la lipolyse)</li>
+            <li>Sucres rapides, sodas, jus de fruits industriels</li>
+            <li>Plats ultra-transformés, fast-food, sauces grasses</li>
+            <li>Produits laitiers gras en grande quantité</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- QUICK TIPS ROW -->
+    <div class="seche-tip-row">
+      <div class="seche-tip-pill"><span class="seche-tip-pill-icon">💧</span>Bois <strong style="color:#e2eaf8;margin:0 3px">3L d'eau</strong>/jour — élimine les toxines et réduit la rétention</div>
+      <div class="seche-tip-pill"><span class="seche-tip-pill-icon">⚖️</span>Pèse-toi <strong style="color:#e2eaf8;margin:0 3px">le matin à jeun</strong> — toujours le même jour de la semaine</div>
+      <div class="seche-tip-pill"><span class="seche-tip-pill-icon">📸</span>Prends des <strong style="color:#e2eaf8;margin:0 3px">photos bi-mensuelles</strong> — la balance ne reflète pas tout</div>
+    </div>
+    <div class="seche-tip-row">
+      <div class="seche-tip-pill"><span class="seche-tip-pill-icon">😴</span><strong style="color:#e2eaf8;margin:0 3px">8h de sommeil</strong> — le cortisol détruit le muscle et stocke la graisse</div>
+      <div class="seche-tip-pill"><span class="seche-tip-pill-icon">🧂</span>Réduis le <strong style="color:#e2eaf8;margin:0 3px">sel</strong> les dernières semaines — limite la rétention sous-cutanée</div>
+      <div class="seche-tip-pill"><span class="seche-tip-pill-icon">🔁</span>Planifie un <strong style="color:#e2eaf8;margin:0 3px">refeed day</strong>/semaine — relance le métabolisme et l'énergie</div>
+    </div>
+
+    <!-- WARNING -->
+    <div class="seche-warning">
+      <span class="seche-warning-icon">⚠️</span>
+      <div><strong>Ne sèche pas trop longtemps ni trop fort.</strong> Une sèche agressive ou prolongée au-delà de 16 semaines sans pause entraîne fatigue chronique, chute hormonale et perte musculaire irréversible. Planifie une phase de maintenance entre chaque cycle. En cas de vertige, faiblesse intense ou trouble du comportement alimentaire, consulte un médecin immédiatement.</div>
     </div>
 
   </section>
