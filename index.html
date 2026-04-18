@@ -792,8 +792,23 @@
   }
 
   @media (max-width: 500px) {
-    .exo-stats { display: none; }
-    .exo-card { grid-template-columns: auto 1fr; }
+    .exo-card {
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto auto;
+    }
+    .exo-card .exo-info { grid-column: 2; }
+    .exo-stats {
+      grid-column: 1 / -1;
+      margin-top: 8px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+      gap: 0;
+      justify-content: space-around;
+      width: 100%;
+    }
+    .stat-sep { display: none; }
+    .stat-pill { flex: 1; }
+    .stat-pill-val { font-size: 16px; }
     .hero-stats { gap: 20px; }
   }
 
@@ -1723,6 +1738,253 @@
 
   </section>
 
+  <!-- HYGIÈNE DE VIE -->
+  <section class="hygiene-section">
+    <div class="section-eyebrow">Hygiène de vie — Les fondations de la progression</div>
+
+    <div class="hygiene-intro">
+      L'entraînement ne représente que <strong>1 à 2 heures</strong> de ta journée. Ce qui se passe dans les <strong>22 heures restantes</strong> — ton sommeil, ta gestion du stress, ton hygiène corporelle, tes habitudes quotidiennes — détermine autant, sinon plus, tes résultats. Ces conseils sont souvent négligés, mais ce sont eux qui séparent les athlètes qui progressent de ceux qui stagnent.
+    </div>
+
+    <!-- PILIERS -->
+    <div class="hygiene-pillars">
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">😴</span><div class="hygiene-pillar-name" style="color:#a78bfa">Sommeil</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🧘</span><div class="hygiene-pillar-name" style="color:#34d399">Stress</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🚿</span><div class="hygiene-pillar-name" style="color:#38bdf8">Hygiène</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🦴</span><div class="hygiene-pillar-name" style="color:#fb923c">Mobilité</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🚭</span><div class="hygiene-pillar-name" style="color:#f87171">Substances</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">📱</span><div class="hygiene-pillar-name" style="color:#fbbf24">Écrans</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🧬</span><div class="hygiene-pillar-name" style="color:#e879f9">Suppléments</div></div>
+      <div class="hygiene-pillar"><span class="hygiene-pillar-icon">🧠</span><div class="hygiene-pillar-name" style="color:#4ade80">Mental</div></div>
+    </div>
+
+    <!-- ACCORDION -->
+    <div class="hygiene-accordion">
+
+      <div class="hygiene-item open" style="--hi-color:#a78bfa" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">😴</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°1</div>
+            <div class="hygiene-item-title">Sommeil — La récupération se joue la nuit</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>La <strong>synthèse protéique musculaire</strong> et la sécrétion de <strong>GH (hormone de croissance)</strong> atteignent leur pic durant les phases de sommeil profond. Sans 7 à 9 heures de sommeil de qualité, même le meilleur programme et la meilleure nutrition ne produiront pas leur plein potentiel.</p>
+            <ul>
+              <li>Couche-toi et lève-toi à <strong>heure fixe</strong> 7 jours/7, week-end compris — la régularité du cycle circadien est clé</li>
+              <li>Température idéale de la chambre : <strong>16–19 °C</strong> — le froid favorise l'endormissement</li>
+              <li>Évite les repas lourds dans les <strong>2 heures avant le coucher</strong> — la digestion perturbe le sommeil profond</li>
+              <li>En cas de mal à dormir : 3 mg de <strong>mélatonine</strong> 30 min avant le coucher (conseil ponctuel, pas un substitut)</li>
+              <li>Un <strong>nap de 20 min</strong> l'après-midi booste la récupération sans perturber le sommeil nocturne</li>
+              <li>Le manque de sommeil augmente le <strong>cortisol</strong>, favorise la prise de gras et réduit la testostérone</li>
+            </ul>
+            <p><span class="hi-tag hi-good">Objectif</span> 7–9h · <span class="hi-tag hi-bad">Danger</span> Moins de 6h = catabolisme garanti</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#38bdf8" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">🚿</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°2</div>
+            <div class="hygiene-item-title">Hygiène corporelle — Prendre soin de son outil de travail</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>L'entraînement crée un environnement chaud et humide propice aux bactéries et champignons. Une hygiène rigoureuse prévient les infections cutanées, les mycoses et les plaies qui te forcerait à interrompre ton programme.</p>
+            <ul>
+              <li><strong>Douche immédiatement après chaque séance</strong> — ne reste pas dans des vêtements de sport mouillés plus de 30 min</li>
+              <li>Lave tes vêtements de sport <strong>après chaque utilisation</strong> sans exception — même s'ils semblent propres</li>
+              <li>Sèche soigneusement <strong>entre les orteils</strong> après la douche pour prévenir la mycose du pied d'athlète</li>
+              <li>Hydrate ta peau avec une <strong>crème sans parfum</strong> — la peau sèche se craquelle et s'infecte plus facilement</li>
+              <li>Change tes <strong>chaussettes de sport</strong> à chaque séance et laisse tes chaussures sécher 48h entre deux utilisations</li>
+              <li>Coupe tes ongles de pieds <strong>courts et droits</strong> pour éviter les ongles incarnés douloureux</li>
+              <li>Si tu fais du sol : <strong>nettoie le tapis</strong> avant et après chaque séance avec un spray désinfectant</li>
+            </ul>
+            <p><span class="hi-tag hi-tip">Astuce</span> Une douche froide (15–30s) en fin de séance réduit l'inflammation musculaire et améliore la circulation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#fb923c" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">🦴</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°3</div>
+            <div class="hygiene-item-title">Mobilité & Posture — Investir pour durer</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>La musculation raccourcit les muscles et peut créer des <strong>déséquilibres posturaux</strong> si elle n'est pas compensée par du stretching et de la mobilité. Négliger cela conduit à des blessures chroniques et à une amplitude de mouvement réduite qui plafonne tes performances.</p>
+            <ul>
+              <li>10 min de <strong>stretching statique</strong> après chaque séance — jamais avant (risque de blessure à froid)</li>
+              <li>Travaille ta <strong>mobilité des hanches et des épaules</strong> quotidiennement — ce sont les zones les plus restrictives en musculation maison</li>
+              <li>Si tu travailles assis : <strong>lève-toi toutes les 45 min</strong>, fais des rotations d'épaules et des étirements du psoas</li>
+              <li>Intègre <strong>1 séance de yoga ou pilates</strong> par semaine — améliore la proprioception et la stabilité du gainage</li>
+              <li>Utilise un <strong>foam roller</strong> (rouleau de massage) 5 min sur les quadriceps, IT band et dorsaux — réduit les nœuds myofasciaux</li>
+              <li>Dors sur le <strong>côté ou sur le dos</strong> — jamais sur le ventre (pression cervicale et lombaire)</li>
+            </ul>
+            <p><span class="hi-tag hi-tip">Règle d'or</span> Pour chaque heure de musculation, prévois 10 min de mobilité active.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#34d399" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">🧘</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°4</div>
+            <div class="hygiene-item-title">Stress & Santé mentale — L'ennemi silencieux</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>Le <strong>cortisol chronique</strong> (hormone du stress) est catabólique : il détruit le tissu musculaire, favorise le stockage des graisses abdominales et réduit la testostérone. Un sportif stressé n'est pas un sportif qui progresse.</p>
+            <ul>
+              <li><strong>5 min de cohérence cardiaque</strong> matin et soir (inspiration 5s, expiration 5s) — réduit cliniquement le cortisol</li>
+              <li>L'entraînement lui-même est un <strong>stress positif</strong> — mais ne t'entraîne pas si tu es épuisé émotionnellement, c'est contre-productif</li>
+              <li>Pratique la <strong>gratitude quotidienne</strong> : 3 choses positives de la journée — corrèle positivement avec la récupération sportive</li>
+              <li>Protège tes <strong>jours de repos</strong> — ils ne sont pas optionnels, ils sont la moitié de ton programme</li>
+              <li>Si tu ressens une <strong>perte de motivation durable</strong> malgré le repos, c'est le signe d'un surmenage — réduis le volume 1 à 2 semaines</li>
+              <li>La nature est un puissant <strong>régulateur du cortisol</strong> — 20 min de marche en extérieur suffisent</li>
+            </ul>
+            <p><span class="hi-tag hi-bad">Signe d'alarme</span> Insomnies + irritabilité + courbatures permanentes = surentraînement. Pause obligatoire.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#fbbf24" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">📱</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°5</div>
+            <div class="hygiene-item-title">Écrans & Lumière bleue — Protéger la récupération</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>La lumière bleue des écrans supprime la <strong>sécrétion de mélatonine</strong> jusqu'à 3 heures avant le coucher, retardant l'endormissement et réduisant la profondeur du sommeil — directement au détriment de ta récupération musculaire.</p>
+            <ul>
+              <li><strong>Pas d'écran</strong> (téléphone, tablette, TV, ordinateur) dans les <strong>60–90 min avant le coucher</strong></li>
+              <li>Active le <strong>mode nuit / filtre lumière bleue</strong> sur tous tes appareils dès 20h</li>
+              <li>Pas de téléphone dans la chambre à coucher — la tentation du scroll nocturne sabote ton sommeil sans que tu t'en rendes compte</li>
+              <li>En journée, expose-toi à la <strong>lumière naturelle le matin</strong> dès le réveil (10–15 min dehors) — ancre ton rythme circadien</li>
+              <li>Pendant l'entraînement : <strong>pose le téléphone</strong>. Le scroll entre les séries allonge les temps de repos et fragmente la concentration</li>
+            </ul>
+            <p><span class="hi-tag hi-tip">Alternative</span> Remplace le scroll du soir par 10 min de lecture papier, de méditation ou d'étirements.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#f87171" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">🚭</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°6</div>
+            <div class="hygiene-item-title">Alcool, Tabac & Substances — Les vrais freins à la progression</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>Ces substances ont des effets directs et documentés sur la <strong>synthèse musculaire, la récupération et la performance</strong>. Aucun programme sérieux ne peut compenser leurs effets si la consommation est régulière.</p>
+            <ul>
+              <li><strong>Alcool</strong> — inhibe directement la synthèse protéique jusqu'à 24h après consommation, augmente le cortisol, déshydrate, perturbe le sommeil. 2 verres le samedi soir peuvent annuler les gains de la semaine.</li>
+              <li><strong>Tabac / cigarette</strong> — réduit la capacité pulmonaire, la vascularisation musculaire et ralentit la cicatrisation des micro-déchirures musculaires</li>
+              <li><strong>Cannabis</strong> — perturbe le sommeil paradoxal (phase de récupération cognitive), réduit la motivation à l'effort à long terme</li>
+              <li><strong>Caféine</strong> — alliée en pré-workout (3–6 mg/kg, 30–60 min avant) mais ennemie après 14h si elle perturbe ton sommeil</li>
+              <li><strong>Sucre en excès</strong> — provoque des pics d'insuline suivis de chutes d'énergie qui plombent la séance</li>
+            </ul>
+            <p><span class="hi-tag hi-bad">Réalité</span> L'alcool est le saboteur n°1 des résultats sportifs chez les débutants. Même occasionnel, son impact sur la récupération est sous-estimé.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#e879f9" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">🧬</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°7</div>
+            <div class="hygiene-item-title">Suppléments utiles — Ce qui vaut vraiment le coup</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>Les compléments alimentaires ne remplacent <strong>jamais</strong> une alimentation équilibrée. Mais certains ont une efficacité prouvée par la littérature scientifique et peuvent réellement accélérer la progression.</p>
+            <ul>
+              <li><strong>Créatine monohydrate</strong> — le supplément le plus documenté en musculation. 3–5 g/jour, tous les jours (avec ou sans entraînement). Augmente la force, la récupération et l'endurance musculaire. Sans effets secondaires prouvés.</li>
+              <li><strong>Protéines en poudre (whey)</strong> — pratique pour atteindre l'apport protéique quotidien, surtout en post-séance. N'est pas nécessaire si les apports alimentaires sont couverts.</li>
+              <li><strong>Vitamine D3</strong> — la carence est extrêmement fréquente (surtout en hiver). Impacte la récupération, la testostérone et l'immunité. 2 000 UI/jour en hiver.</li>
+              <li><strong>Magnésium bisglycinate</strong> — réduit les crampes, améliore la qualité du sommeil, limite la fatigue neuro-musculaire. 300 mg le soir.</li>
+              <li><strong>Oméga-3 (EPA/DHA)</strong> — propriétés anti-inflammatoires, accélèrent la récupération musculaire. 2–3 g/jour avec un repas.</li>
+            </ul>
+            <p><span class="hi-tag hi-bad">Inutile</span> Brûleurs de graisses, boosters pre-workout chargés en stimulants, BCAA si les protéines totales sont suffisantes.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hygiene-item" style="--hi-color:#4ade80" onclick="toggleHygiene(this)">
+        <div class="hygiene-item-head">
+          <span class="hygiene-item-emoji">🧠</span>
+          <div>
+            <div class="hygiene-item-label">Pilier n°8</div>
+            <div class="hygiene-item-title">Mental & Régularité — Le vrai secret de la progression</div>
+          </div>
+          <span class="hygiene-item-chevron">▼</span>
+        </div>
+        <div class="hygiene-item-body">
+          <div class="hygiene-item-content">
+            <p>La régularité bat l'intensité. Une séance à 70% d'effort, <strong>faite chaque semaine sans exception</strong> pendant 6 mois, donnera de meilleurs résultats que des séances intenses faites sporadiquement.</p>
+            <ul>
+              <li>La <strong>motivation est une émotion</strong>, la discipline est une habitude. Ne compte pas sur la motivation — construis des rituels</li>
+              <li>Commence par te mettre en tenue — souvent, l'action précède la motivation, pas l'inverse</li>
+              <li>Tiens un <strong>journal d'entraînement</strong> (même simple) : charge, reps, ressenti. La progression visible est le meilleur des motivateurs</li>
+              <li>Fixe-toi des <strong>objectifs sur 30 jours</strong>, pas sur 6 mois — les horizons courts créent de la dynamique</li>
+              <li><strong>Compare-toi uniquement à toi-même</strong> d'il y a 3 mois. Les réseaux sociaux faussent la perception de la norme.</li>
+              <li>Accepte les <strong>semaines sans progrès</strong> — le corps progresse en escalier, pas en ligne droite</li>
+              <li>Trouve un <strong>partenaire d'entraînement</strong> ou une communauté, même en ligne — l'accountability double le taux d'adhérence</li>
+            </ul>
+            <p><span class="hi-tag hi-good">Statistique</span> 80% des abandons surviennent dans les 6 premières semaines. Si tu passes ce cap, tu as déjà gagné.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- DAILY CHECKLIST -->
+    <div class="hygiene-score-wrap">
+      <div class="hygiene-score-title">Checklist quotidienne de l'athlète</div>
+      <div class="hygiene-score-sub">Coche ce que tu as fait aujourd'hui — un bon score, c'est une bonne journée de récupération.</div>
+      <div class="hygiene-checks" id="hygieneChecks">
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">💧 J'ai bu au moins 2L d'eau aujourd'hui</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">😴 J'ai dormi 7 à 9h cette nuit</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">🥩 J'ai atteint mon apport protéique quotidien</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">🚿 Je me suis douché après ma séance</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">🦴 J'ai fait 10 min de stretching ou mobilité</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">📵 Pas d'écran dans l'heure avant le coucher</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">🚭 Pas d'alcool ni de tabac aujourd'hui</span></div>
+        <div class="hygiene-check-row" onclick="toggleHCheck(this)"><div class="hygiene-checkbox"></div><span class="hygiene-check-label">🌿 J'ai pris l'air au moins 15 min en extérieur</span></div>
+      </div>
+      <div class="hygiene-score-bar-wrap">
+        <div class="hygiene-score-bar-label"><span>Score du jour</span><span id="hygieneScoreLabel">0 / 8</span></div>
+        <div class="hygiene-score-bar"><div class="hygiene-score-fill" id="hygieneScoreFill" style="width:0%"></div></div>
+        <div class="hygiene-score-msg" id="hygieneScoreMsg">Commence à cocher tes habitudes du jour ✓</div>
+      </div>
+    </div>
+
+  </section>
+
 </div>
 
 <footer>
@@ -2194,7 +2456,7 @@ function renderMain() {
           return `
             <div class="exo-card ${done ? 'done' : ''}" onclick="toggleExo(${activeDay}, ${i})">
               <div class="exo-check">${done ? '✓' : ''}</div>
-              <div>
+              <div class="exo-info">
                 <div class="exo-name">${ex.name}</div>
                 <div class="exo-tip">${ex.tip}</div>
               </div>
@@ -2272,6 +2534,38 @@ function initCGU() {
       document.getElementById('cguBanner').classList.add('visible');
     }, 900);
   }
+}
+
+// ─── HYGIENE DE VIE ───
+function toggleHygiene(el) {
+  el.classList.toggle('open');
+}
+
+function toggleHCheck(row) {
+  row.classList.toggle('checked');
+  const cb = row.querySelector('.hygiene-checkbox');
+  cb.textContent = row.classList.contains('checked') ? '✓' : '';
+  updateHygieneScore();
+}
+
+function updateHygieneScore() {
+  const rows = document.querySelectorAll('.hygiene-check-row');
+  const total = rows.length;
+  const done = document.querySelectorAll('.hygiene-check-row.checked').length;
+  const pct = Math.round((done / total) * 100);
+  document.getElementById('hygieneScoreFill').style.width = pct + '%';
+  document.getElementById('hygieneScoreLabel').textContent = done + ' / ' + total;
+  const msgs = [
+    'Commence à cocher tes habitudes du jour ✓',
+    'Bon début — continue, chaque geste compte 💪',
+    'Tu prends soin de toi — c\'est la moitié du chemin 🌱',
+    'Excellente journée de récupération ! 🔥',
+    'Journée parfaite — ton corps te remerciera demain 🏆'
+  ];
+  const idx = done === 0 ? 0 : done <= 2 ? 1 : done <= 4 ? 2 : done <= 6 ? 3 : 4;
+  const msg = document.getElementById('hygieneScoreMsg');
+  msg.textContent = msgs[idx];
+  msg.style.color = done >= 7 ? '#4ade80' : done >= 5 ? '#fb923c' : 'var(--muted)';
 }
 
 // Init
