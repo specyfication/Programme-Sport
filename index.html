@@ -1159,6 +1159,164 @@
   }
   .seche-tip-pill:hover { border-color: var(--muted2); }
   .seche-tip-pill-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* ─── HYGIENE DE VIE SECTION ─── */
+  .hygiene-section { margin-top: 56px; }
+
+  .hygiene-intro {
+    background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(6,182,212,0.06), rgba(168,85,247,0.06));
+    border: 1px solid rgba(34,197,94,0.18);
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-bottom: 28px;
+    font-size: 13px; color: #8ca3c8; line-height: 1.75;
+  }
+  .hygiene-intro strong { color: #e2eaf8; }
+
+  /* Piliers row */
+  .hygiene-pillars {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+  .hygiene-pillar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+    cursor: default;
+  }
+  .hygiene-pillar:hover { transform: translateY(-2px); border-color: var(--muted2); }
+  .hygiene-pillar-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+  .hygiene-pillar-name {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+    text-transform: uppercase; line-height: 1.3;
+  }
+
+  /* Accordion cards */
+  .hygiene-accordion { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+  .hygiene-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .hygiene-item.open { border-color: var(--hi-color, var(--muted2)); }
+  .hygiene-item-head {
+    display: flex; align-items: center; gap: 14px;
+    padding: 18px 20px;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .hygiene-item-head:hover { background: rgba(255,255,255,0.02); }
+  .hygiene-item-emoji { font-size: 22px; flex-shrink: 0; }
+  .hygiene-item-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--hi-color, var(--muted));
+    margin-bottom: 3px;
+  }
+  .hygiene-item-title { font-size: 14px; font-weight: 800; color: #f1f5f9; }
+  .hygiene-item-chevron {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 12px; color: var(--muted);
+    transition: transform 0.25s;
+  }
+  .hygiene-item.open .hygiene-item-chevron { transform: rotate(180deg); }
+  .hygiene-item-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16,1,0.3,1), padding 0.25s;
+    padding: 0 20px;
+  }
+  .hygiene-item.open .hygiene-item-body {
+    max-height: 800px;
+    padding: 0 20px 20px;
+  }
+  .hygiene-item-content {
+    border-top: 1px solid #0e1726;
+    padding-top: 16px;
+    font-size: 12px; color: #6b82a3; line-height: 1.8;
+  }
+  .hygiene-item-content p { margin-bottom: 10px; }
+  .hygiene-item-content p:last-child { margin-bottom: 0; }
+  .hygiene-item-content strong { color: #9ab0cc; }
+  .hygiene-item-content ul { list-style: none; padding: 0; margin: 8px 0 10px; display: flex; flex-direction: column; gap: 5px; }
+  .hygiene-item-content li { padding-left: 18px; position: relative; }
+  .hygiene-item-content li::before { content: '→'; position: absolute; left: 0; font-weight: 700; color: var(--hi-color, #f97316); }
+  .hygiene-item-content .hi-tag {
+    display: inline-block;
+    padding: 2px 9px; border-radius: 6px;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    text-transform: uppercase; margin-right: 4px; margin-bottom: 4px;
+    border: 1px solid;
+  }
+  .hygiene-item-content .hi-good { background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.25); color: #4ade80; }
+  .hygiene-item-content .hi-bad  { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.2);  color: #f87171; }
+  .hygiene-item-content .hi-tip  { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.2); color: #fb923c; }
+
+  /* Score widget */
+  .hygiene-score-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 10px;
+  }
+  .hygiene-score-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px; letter-spacing: 0.04em; color: #f1f5f9;
+    margin-bottom: 4px;
+  }
+  .hygiene-score-sub { font-size: 11px; color: var(--muted); margin-bottom: 20px; line-height: 1.5; }
+  .hygiene-checks { display: flex; flex-direction: column; gap: 8px; }
+  .hygiene-check-row {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .hygiene-check-row:hover { border-color: var(--muted2); }
+  .hygiene-check-row.checked { border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.04); }
+  .hygiene-checkbox {
+    width: 20px; height: 20px; border-radius: 6px;
+    border: 2px solid var(--muted2); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900; color: white;
+    transition: all 0.2s;
+  }
+  .hygiene-check-row.checked .hygiene-checkbox {
+    background: #22c55e; border-color: #22c55e;
+  }
+  .hygiene-check-label { font-size: 12px; color: #8ca3c8; flex: 1; line-height: 1.4; }
+  .hygiene-check-row.checked .hygiene-check-label { color: #c8d5e8; }
+  .hygiene-score-bar-wrap { margin-top: 16px; }
+  .hygiene-score-bar-label {
+    display: flex; justify-content: space-between;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.1em;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 8px;
+  }
+  .hygiene-score-bar-label span:last-child { color: #22c55e; }
+  .hygiene-score-bar {
+    height: 6px; background: var(--border); border-radius: 99px; overflow: hidden;
+  }
+  .hygiene-score-fill {
+    height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, #22c55e, #86efac);
+    transition: width 0.4s ease;
+  }
+  .hygiene-score-msg {
+    margin-top: 10px; font-size: 12px; color: var(--muted);
+    font-weight: 600; min-height: 18px; transition: color 0.3s;
+  }
 </style>
 </head>
 <body>
